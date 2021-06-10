@@ -1,0 +1,38 @@
+         mapper的xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.Accoutmapper">
+
+<!--    public Accoutuser getacct(String id);-->
+<!--    <update id="settime" parameterType="com.example.demo.pojo.Accoutuser">-->
+<!--        update domain set  idtime=#{idtime}  where  id=#{id}-->
+<!--    </update>-->
+<!--    <select id="getid" resultType="com.example.demo.pojo.Accoutuser">-->
+<!--        select *  from domain  where  id=#{id}-->
+<!--    </select>-->
+<!--setacct(String id,String password,String idtime,String idname,String zctime,String sex);-->
+<!--    <insert id="setacct" parameterType="com.example.demo.pojo.Accoutuser">-->
+<!--        insert into domain(id,pass,idtime,idname,zctime,sex)-->
+<!--        values (#{id},#{pass},#{idtime},#{idname},#{zctime},#{sex})-->
+<!--    </insert>-->
+</mapper>
+
+
+bootstart  4.3.1
+
+
+发布前的main函数
+
+
+@SpringBootApplication()
+@MapperScan("com.demo.mapper")
+public class LbbApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(LbbApplication.class, args);
+
+	}
+
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/enterOne.css">
+    <link rel="stylesheet" href="css/bootstrap-4.0.0.css">
+	<script type="text/javascript">
+		function ajaxone(){
+			var name=document.getElementById("exampleInputEmail1").value;
+			//不为空才发请求，为空则提醒
+			if(name=="" || name==null)
+				{
+					var data="用户名不能为空";
+					document.getElementById("getbyid").innerHTML=data;
+				}
+			else{
+			//创建xmlhttpqequest 对象  
+			var xmlhttprequestone=new XMLHttpRequest();
+			//绑定事件
+			xmlhttprequestone.onreadystatechange=function(){
+				  if(xmlhttprequestone.readyState==4&&xmlhttprequestone.status==200){
+					  var dataone=xmlhttprequestone.responseText;
+					  document.getElementById("getbyid").innerHTML=dataone;
+
+				  }
+			}
+			var parname="name="+name;
+			//初始化数据
+			xmlhttprequestone.open("post","enter/ajaxgetid?"+parname,true);
+			//发送请求
+			xmlhttprequestone.send();
+			}
+		}
+	</script>
+</head>
+<body>
+<div class="title-line">
+    <span class="tit"  style="font-size: 38px;">登录</span>
+</div>
+<div style="height: 150px">
+
+</div>
+<div align="center" >
+    <form action="/dlindex" method="post">
+        <a th:text="${tishi}"></a>
+        <div class="form-group">
+            <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="输入您的账号"   style='width:350px;' onblur="ajaxone();" />
+            <small id="emailHelp1" class="form-text text-muted"></small>
+        </div>
+        <a th:text="${id}"  id="getbyid" th:href="@{/index_two}"></a>
+        <div class="form-group">
+            <input type="password"  class="form-control" name="password" id="exampleInputPassword1" placeholder="请输入您密码" style='width:350px;'>
+        </div>
+        <a th:text="${password}"></a>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary"  >登录</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

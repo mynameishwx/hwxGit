@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>音乐</title>
+</head>
+<body>
+	<table width="300" border="0">
+  <tbody>
+    <tr th:each="music,star:${page.Records}">
+		<td th:text="${star.count}"></td>
+        <td><a th:href="@{/musicone/{idname}(idname=${music.idname})}" th:text="${music.idname}"></a></a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<div >
+  当前在第  [[${page.current}]] 页， 总共  [[${page.pages}]] 页 ，一共 [[${page.total}]]  条记录
+</div>
+<!--    <video width="320" height="240" controls="controls" >-->
+
+<!--    <source src="video/movie.mp4" type="video/mp4" />-->
+
+<!--    <object data="video/movie.mp4"width="320" height="240">-->
+
+<!--        <embed width="320"height="240" src="video/movie.mp4" />-->
+
+<!--    </object>-->
+
+<!--    </video>-->
+
+</body>
+</html>
+<!--                @{/play/${id}}      -->
+<!--<audio th:src="@{${url}}" controls="controls"></audio>-->

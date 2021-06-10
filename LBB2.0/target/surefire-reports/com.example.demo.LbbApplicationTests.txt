@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: com.example.demo.LbbApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.295 s <<< FAILURE! - in com.example.demo.LbbApplicationTests
+contextLoads  Time elapsed: 0.283 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: StatementCallback; bad SQL grammar [select count(*)  from  hwx_one]; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 对象名 'hwx_one' 无效。
+	at com.example.demo.LbbApplicationTests.contextLoads(LbbApplicationTests.java:19)
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: 对象名 'hwx_one' 无效。
+	at com.example.demo.LbbApplicationTests.contextLoads(LbbApplicationTests.java:19)
+

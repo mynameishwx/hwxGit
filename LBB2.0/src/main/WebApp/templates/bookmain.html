@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书馆</title>
+<!--	<script type="text/javascript">-->
+<!--		function salary(){-->
+<!--			var mainname=document.getElementById("main").value;-->
+<!--			var secondary=document.getElementById("secondary").value;-->
+<!--			-->
+<!--			if(mainname==secondary){-->
+<!--				alert("主专业不能与副专业相同,请重新选择");-->
+<!--			}else{-->
+<!--				var xmlhttp=new XMLHttpRequest();-->
+<!--				var data="main="+mainname+"&secondary="+secondary;-->
+<!--				xmlhttp.onreadystatechange=function(){-->
+<!--					if(xmlhttp.readyState==4 && xmlhttp.status==200){-->
+<!--                          var returndata=xmlhttp.responseText;-->
+<!--						var panduan=returndata.substr(1,2);-->
+<!--						if(panduan=="wx"){-->
+<!--							alert(returndata.substr(3,returndata.length));-->
+<!--						}else{-->
+<!--							var shuzu=returndata.split(",");-->
+<!--						    var return_main=shuzu[0];-->
+<!--						    var return_secondary=shuzu[1];-->
+<!--						-->
+<!--						document.getElementById("returnmain").innerHTML=return_main;-->
+<!--						document.getElementById("returnsecondary").innerHTML=return_secondary;-->
+<!--						alert("添加成功");-->
+<!--						}-->
+<!--					}-->
+<!--			}-->
+<!--			xmlhttp.open("get","bookmain/major?"+data,true);-->
+<!--			xmlhttp.send();-->
+<!--			}-->
+<!--	-->
+<!--		}-->
+<!--	</script>-->
+</head>
+<body>
+<div>
+    <ul>阅读</ul>
+	  <ol><a id="returnmain" th:href="@{/bookmain/books/{name}(name=${main})}">[(${main})]</a></ol>
+	  <ol><a id="returnsecondary" th:href="@{/bookmain/books/{name}(name=${Secondary})}">[(${Secondary})]</a></ol>
+
+
+	<ul>借阅</ul>
+	<ol></ol>
+</div>
+</body>
+</html>

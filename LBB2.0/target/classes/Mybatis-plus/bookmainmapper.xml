@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.bookmainmapper">
+    <resultMap id="bookmain" type="com.demo.pojo.bookmain">
+        <result column="id" property="id"/>
+        <result column="major" property="major"/>
+        <result column="showtime" property="showTime"/>
+        <result column="majorCreateTime" property="majorCreateTime"/>
+        <result column="majorUpdateTime" property="majorUpdateTime"/>
+        <result column="bookclass" property="bookclass"/>
+        <result column="loin" property="loin"/>
+        <result column="session" property="session"/>
+    </resultMap>
+
+    <select id="getById" resultType="com.demo.pojo.bookmain" resultMap="bookmain">
+        select * from major where id=#{id}
+    </select>
+
+    <select id="getbysession" resultType="com.demo.pojo.bookmain" resultMap="bookmain" >
+        select * from major where session=#{session}
+    </select>
+
+</mapper>

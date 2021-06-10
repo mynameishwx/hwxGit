@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+	<script type="text/javascript">
+		function useralter(){
+			//创建 XMLHttpRequest 对象
+			var xmlhttp=new XMLHttpRequest();
+			//绑定事件
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				   alert("修改成功");
+				}
+				if(xmlhttp.status==500){
+				alert("后台程序错误");
+				}
+			}
+			var imgfile=document.getElementById("file").value;
+            var data="imgfile="+imgfile;
+			//初始化数据
+			xmlhttp.open("post","user?"+data,true);
+			//发送请求
+			xmlhttp.send();
+		}
+	</script>
+</head>
+<body>
+   <form action="/userone" method="post" enctype="multipart/form-data">
+<!--   <div>-->
+       <a>头像:
+<!--           头像-->
+           <img  th:src="@{${img}}" width="60px" height="40px">
+<!--           上传头像-->
+           <input type="file" accept="image/*" name="img" id="file" capture="camera">
+       </a>
+       </br>
+       <a>昵称:
+<!--           昵称-->
+           <a th:text="${idname}"></a>  <a>   </a>
+<!--           想要修改的昵称-->
+           <input autocomplete="off" name="name" id="text" placeholder="你的昵称"
+                  type="text" rows="2" maxlength="16" validateevent="true" >
+       </a>
+       </br>
+<!--       id-->
+       id: <a th:text="${id}">
+   </a>
+       </br>
+<!--    onClick="useralter();"/   <button type="submit" class="btn btn-primary" >提交</button>-->
+       <input type="submit" value="提交" >
+
+   </form>
+<!--   </div>-->
+</body>
+</html>

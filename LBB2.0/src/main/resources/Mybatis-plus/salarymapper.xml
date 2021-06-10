@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.salarymapper">
+<!--    查询工资-->
+    <select id="getsalary" resultType="com.demo.pojo.salary" parameterType="string" >
+        select name,time,plus,salary from salary where name=#{id}
+    </select>
+<!--    更改工资-->
+    <insert id="setsalary"  >
+      insert into salary(name,time,plus,salary) values(#{name},#{time},#{plus},#{salary})
+    </insert>
+<!--    查询总工资-->
+    <select id="getsalarysum" resultType="integer">
+        select  sum(salary)  from salary
+    </select>
+</mapper>

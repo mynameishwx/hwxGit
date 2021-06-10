@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.bookmapper">
+    <resultMap id="book" type="com.demo.pojo.book">
+        <result column="bookName" property="bookName"/>
+        <result column="bookCreateName" property="bookCreateName"/>
+        <result column="create_time" property="create_time"/>
+        <result column="update_time" property="update_time"/>
+        <result column="bookclass" property="bookclass"/>
+    </resultMap>
+    <select id="getbookclass" resultType="com.demo.pojo.book" resultMap="book">
+         select booName,bookCreateName,create_time,update_time,bookclass from book  where
+         bookclass=#{bookclass}
+    </select>
+</mapper>

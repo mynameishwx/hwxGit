@@ -1,0 +1,111 @@
+
+
+   <?xml version="1.0" encoding="UTF-8" ?>
+   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   <mapper namespace="mapper类">
+   <!--    查询-->
+        <select id="getname" resultType="com.demo.pojo.music">
+            select idname from music
+        </select>
+   <!--    插入-->
+       <insert id="setname" parameterType="integer">
+           insert into music(idname) values(#{id})
+       </insert>
+   </mapper>
+
+
+      resultType     设定方法的返回值类型
+      parameterType   传入参数设定
+
+
+
+   resultType(结果返回类型) :  可以返回   1.简单类型如int ,string 等,
+                    2.还可以返回对象,返回对象时,返回的字段名，对应类的字段名
+                    3.返回map<key,value>,只能返回一行数据，列名为key，列值为value
+
+
+   resultMap(设定返回值到指定类的字段中) :
+
+        1.先定义 resultMap(id是唯一的，在引用时用id进行调用 ，type 是要映射的类的全限定名)
+            在result标签中定义sql语句  (column)返回的字段名  与   (property)类中的字段名  的对应关系
+
+            <resultMap id="id1" type="com.demo.pojo.Accoutuser">
+                   <result column="id" property="id"/>
+            </resultMap>
+
+        2.定义好关系之后，直接用id名即上面定义的(id1)引用即可
+
+                <select id="getid" resultType="com.demo.pojo.Accoutuser" resultMap="id1">
+                    select *  from domain  where  id=#{id}
+                </select>
+
+
+   like 模糊查询的两种方式 :
+
+        1. 在Java代码中去拼接 like 后面的内容 然后直接用 #{name} 传过去即可
+
+            java:
+
+               public void getlike(){
+                   String name="%hwx%" ;
+                   setlike(name);
+               }
+
+            mapperxml:
+                <select id="setlike" resultType="">
+                   select *  from  domain  where like  #{name}  //实际开发中不建议使用  *  ，应该将所以字段名打出来
+                </select>
+
+
+        2. 在select中 定义like的约束，用  #{name} 来传值
+
+            <select id="setlike" resultType="">
+                  select *  from  domain  where like "%" #{name} "%"
+
+                  //注意  "%" 号后面的空格一定要有,写法比较固定，建议使用第一种
+            </select>
+
+   foreach 使用方法 1:
+
+        <select id="foreachone" resultType="">
+                          select *  from  domain  where
+
+                          //注意  "%" 号后面的空格一定要有,写法比较固定，建议使用第一种
+                    </select>
+
+
+
+
+
+
+
+
+            <!--<?xml version="1.0" encoding="UTF-8" ?>-->
+            <!--<!DOCTYPE configuration-->
+            <!--        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"-->
+            <!--        "http://mybatis.org/dtd/mybatis-3-config.dtd">-->
+            <!--<configuration>-->
+            <!--    <properties resource="application-dev.yml" />-->
+            <!--    <settings>-->
+            <!--        &lt;!&ndash; 控制台打印sql语句 &ndash;&gt;-->
+            <!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+            <!--    </settings>-->
+            <!--    <environments default="development">-->
+            <!--        <environment id="development">-->
+            <!--            <transactionManager type="JDBC"/>-->
+            <!--            <dataSource type="POOLED">-->
+            <!--                <property name="driver" value="${driver}"/>-->
+            <!--                <property name="url" value="${url}"/>-->
+            <!--                <property name="username" value="${username}"/>-->
+            <!--                <property name="password" value="${password}"/>-->
+            <!--            </dataSource>-->
+            <!--        </environment>-->
+            <!--    </environments>-->
+            <!--    <mappers>-->
+            <!--        <mapper resource="classpath:Mybatis-plus/Accoutmapper.xml"/>-->
+            <!--        <mapper resource="classpath:Mybatis-plus/ipmapper.xml"/>-->
+            <!--        <mapper resource="classpath:Mybatis-plus/musicmapper.xml"/>-->
+            <!--        <mapper resource="classpath:Mybatis-plus/salarymapper.xml" />-->
+            <!--        <mapper resource="classpath:Mybatis-plus/wxmapper.xml"/>-->
+            <!--    </mappers>-->
+            <!--</configuration>-->
