@@ -24,7 +24,7 @@ public interface Accoutmapper extends BaseMapper<Accoutuser> {
 
 //    public   Integer setCondit(String condit,String id); //在线状态
 
-    public Integer alteruser(Accoutuser accoutuser);
+    public Integer alteruser(Accoutuser accoutuser);   //修改
 
 
     List<Accoutuser> foreach(List<String> integers);  //foreach 使用方法一

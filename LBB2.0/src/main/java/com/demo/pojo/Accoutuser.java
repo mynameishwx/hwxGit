@@ -23,11 +23,11 @@ public class Accoutuser {
     private  Date zctime;  //注册时间
 
     private  String sex;   // 性别
-    private  Integer ratio;   // 级别
+    private  String ratio;   // 随机盐
 
     @TableLogic
     @TableField(value = "deleted",fill = FieldFill.INSERT)
-    private  Integer  deleted;  // 在线状态
+    private  Integer  deleted;  // 逻辑删除
 
     private  String  img;    //头像id
 
@@ -41,7 +41,7 @@ public class Accoutuser {
 
     @Version
     @TableField(value = "version" ,fill = FieldFill.INSERT)
-    private  Integer version;
+    private  Integer version;   //版本控制
 
     public Accoutuser(){
 

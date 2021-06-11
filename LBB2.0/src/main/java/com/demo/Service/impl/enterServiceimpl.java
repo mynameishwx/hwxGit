@@ -23,7 +23,7 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
     @Autowired
     AccoutService accoutService;
 
-
+   @Autowired
     Accoutuser accoutuser;
 
     @Autowired
@@ -31,7 +31,6 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
      @Override
     public String dl_index(String id, String password, HttpSession session,HttpServletRequest request, Map<String,Object> mapone) {
         if((accoutuser=accoutService.getServiceid(id))!=null){
-            if(accoutuser.getId().equals(id)&&accoutuser.getPass().equals(password)){
                 mapone.put("idname", accoutuser.getIdname());
                 mapone.put("id", accoutuser.getId());
                 mapone.put("time",accoutuser.getIdtime());
@@ -57,11 +56,6 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
 
                 }
                 return "main";
-            }
-            else {
-                mapone.put("password","密码错误");
-                return "enter";
-            }
         }
         else {
             mapone.put("id","该账号未注册  去注册");
@@ -86,9 +80,10 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                         }
                         else
                         {
-                            accoutService.setbyuser(accoutusertwo);
                             map.put("zccg","注册成功，请登录!");
-                            return  "enter";
+                           if (accoutService.setbyuser(accoutusertwo)!=0)
+                               return  "enter";
+                           else return "5xx";
                         }
                     }
                     else {

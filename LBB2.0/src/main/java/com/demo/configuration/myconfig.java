@@ -2,6 +2,7 @@ package com.demo.configuration;
 
 import com.demo.comp.MyLocaleResoloer;
 import com.demo.comp.myhand;
+import com.demo.pojo.Accoutuser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -53,5 +54,8 @@ public class myconfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver(){
         return new MyLocaleResoloer();
     }
-
+   @Bean
+    public Accoutuser Accoutuser(){
+        return  new Accoutuser();
+   }
 }

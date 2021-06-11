@@ -5,6 +5,8 @@ import com.demo.Service.enterService;
 import com.demo.pojo.Accoutuser;
 import com.demo.pojo.bookmain;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,19 @@ public class indexController {
    public String index_three(@RequestParam(value = "name",defaultValue = "") String id,
                              @RequestParam("password") String password,
                              Map<String,Object> mapone, HttpSession session, HttpServletRequest request){
-
-           return   enterService.dl_index(id,password,session,request,mapone);
+                         Subject subject=SecurityUtils.getSubject();
+                         try {
+                             UsernamePasswordToken token=new UsernamePasswordToken(id,password);
+                             subject.login(token);
+                             System.out.println("hh");
+                             return   enterService.dl_index(id,password,session,request,mapone);
+                         }catch (UnknownAccountException e){
+                             mapone.put("id","账号错误a");
+                             return "enter";
+                         }catch (IncorrectCredentialsException e){
+                             mapone.put("password","密码错误w");
+                             return "enter";
+                         }
    }
 
    @PostMapping("/zcindex")
@@ -49,17 +62,14 @@ public class indexController {
           if(idname==null || idname.equals("")){
               idname=id;
           }
-          Subject subject= SecurityUtils.getSubject();
-          subject.login(new UsernamePasswordToken(id,password));
           if(!mainname.equals("") && !secondaryname.equals("")){
               if(!mainname.equals(secondaryname)){
                   accoutuser.setIdname(idname);
                   accoutuser.setPass(password);
-
                   bookmain.setId(idname);
                   String major=mainname+","+secondaryname;
                   bookmain.setMajor(major);
-                  bookmainService.insert_major(bookmain);
+//                  bookmainService.insert_major(bookmain);
               }else {
                   map.put("rewasswordWarn","不能选择两个相同的专业");
                   return   "index_two";
