@@ -22,9 +22,6 @@ public class myRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         Accoutuser upuser= (Accoutuser) authenticationToken;
-        if(upuser.getId().equals("hwx")){
-             throw new UnknownAccountException("用户错误");
-        }
         return new SimpleAuthenticationInfo(upuser.getId(),upuser.getPass(),"ShiroReaml");
     }
 }
