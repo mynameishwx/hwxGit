@@ -2,6 +2,7 @@ package com.demo.configuration;
 
 import com.demo.comp.MyLocaleResoloer;
 import com.demo.comp.myhand;
+import com.demo.pojo.Accoutuser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -22,9 +23,9 @@ public class myconfig implements WebMvcConfigurer {
                   registry.addViewController("/index_two").setViewName("index_two");
                   registry.addViewController("/").setViewName("index");
                   registry.addViewController("/enter").setViewName("enter");
-                  registry.addViewController("/ajax").setViewName("MyAjax");
                   registry.addViewController("/wx").setViewName("wx");
                   registry.addViewController("/druid/**").setViewName("4xx");
+                  registry.addViewController("/hwxadmin/**").setViewName("admin");
               }
           };
           return configurer;
@@ -44,8 +45,8 @@ public class myconfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/userimg/**").addResourceLocations("file:D:/LBB2.0/Data/img/userimg/");
-            registry.addResourceHandler("/music/**").addResourceLocations("file:D:/LBB2.0/Data/music/");
+            registry.addResourceHandler("/userimg/**").addResourceLocations("file:D:/hwxGit/LBB2.0/Data/img/userimg/");
+            registry.addResourceHandler("/music/**").addResourceLocations("file:D:/hwxGit/LBB2.0/Data/music/");
         registry.addResourceHandler("/avhwx/**").addResourceLocations("file:D:/迅雷下载/snis-868-C/");
     }
 
@@ -53,5 +54,8 @@ public class myconfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver(){
         return new MyLocaleResoloer();
     }
-
+   @Bean
+    public Accoutuser Accoutuser(){
+        return  new Accoutuser();
+   }
 }

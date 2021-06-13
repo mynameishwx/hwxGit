@@ -22,9 +22,9 @@ public class shiro {
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         Map<String,String> stringStringMap=new HashMap<>();
 
-        stringStringMap.put("/data/**","authc");
-
-        stringStringMap.put("/user","authc");
+//        stringStringMap.put("/data/**","authc");
+//        stringStringMap.put("/user","authc");
+        System.out.println("------------------");
         shiroFilterFactoryBean.setLoginUrl("/index");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(stringStringMap);
         return  shiroFilterFactoryBean;
@@ -40,15 +40,14 @@ public class shiro {
 
 
     @Bean
-    public myRealm  realm(){
+    public Realm  realm(){
         myRealm myRealm=new myRealm();
 
         HashedCredentialsMatcher hashedCredentialsMatcher=new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashIterations(1125);
+
         hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        hashedCredentialsMatcher.setHashIterations(1125);  //散列次数
         myRealm.setCredentialsMatcher(hashedCredentialsMatcher);
-
-
         return  myRealm;
     }
 

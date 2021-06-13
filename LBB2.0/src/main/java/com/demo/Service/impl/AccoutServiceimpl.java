@@ -4,19 +4,23 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.demo.Service.AccoutService;
 import com.demo.mapper.Accoutmapper;
 import com.demo.pojo.Accoutuser;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class   AccoutServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> implements AccoutService {
-          @Lazy
+
           @Autowired
   Accoutmapper accoutmapper;
 
+          @Autowired
+          Accoutuser accoutuser;
 
 
     //        查询
@@ -34,7 +38,21 @@ public class   AccoutServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> im
     //        注册
     @Transactional
     public  Integer setbyuser(Accoutuser accoutuser){
-        return accoutmapper.insert(accoutuser);
+        String salt="abcdefghijklmnopqrstuvwxyz0123456789";
+        Random random=new Random();
+        int sjs=random.nextInt(salt.length()+2);
+        String saltok= salt.substring(sjs-1,sjs);  //产生随即盐
+        Md5Hash md5Hash=new Md5Hash(accoutuser.getPass(),saltok,1125);
+        accoutuser.setPass(md5Hash.toHex());
+        accoutuser.setRatio(saltok);
+        try {
+             accoutmapper.insert(accoutuser);
+        }catch (Exception e){
+            System.out.println("插入失败" + accoutuser.toString());
+            e.printStackTrace();
+            return  0;
+        }
+      return  1;
 //        return  accoutmapper.setacct(accoutuser);
    }
 

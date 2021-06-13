@@ -142,7 +142,7 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
         Accoutuser accoutusert=new Accoutuser();
         accoutusert.setId(accoutuser.getId());
         if(file.getSize()!=0){
-            String url="D:/LBB2.0/Data/img/userimg/";
+            String url="D:/hwxGit/LBB2.0/Data/img/userimg/";
             String imgname=file.getOriginalFilename(); //获取图片名称
             //用时间来编号用户头像
             SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMddHHmmss");
