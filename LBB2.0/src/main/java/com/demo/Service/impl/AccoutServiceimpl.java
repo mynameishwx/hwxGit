@@ -39,11 +39,10 @@ public class   AccoutServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> im
     @Transactional
     public  Integer setbyuser(Accoutuser accoutuser){
         String salt="abcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuffer stringBuffer=new StringBuffer();
-        stringBuffer.append(salt);
-        int sjs=new Random().nextInt(stringBuffer.length()+2);
-        String saltok= stringBuffer.substring(sjs-1,sjs);  //产生随即盐
-        Md5Hash md5Hash=new Md5Hash(accoutuser.getPass(),salt,1125);
+        Random random=new Random();
+        int sjs=random.nextInt(salt.length()+2);
+        String saltok= salt.substring(sjs-1,sjs);  //产生随即盐
+        Md5Hash md5Hash=new Md5Hash(accoutuser.getPass(),saltok,1125);
         accoutuser.setPass(md5Hash.toHex());
         accoutuser.setRatio(saltok);
         try {

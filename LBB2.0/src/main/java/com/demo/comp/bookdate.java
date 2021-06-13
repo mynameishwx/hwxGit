@@ -72,7 +72,7 @@ public class bookdate implements HttpSessionListener {
 
     public  boolean  pollinguser(String name,HttpServletRequest request){
 
-        System.out.println("sdsdjsd");
+
         bookmain bookmain=new bookmain();
         Date date=new Date();
        if(bookmainmapper!=null && name!=null){

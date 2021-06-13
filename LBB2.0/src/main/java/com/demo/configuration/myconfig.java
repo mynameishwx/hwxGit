@@ -23,9 +23,9 @@ public class myconfig implements WebMvcConfigurer {
                   registry.addViewController("/index_two").setViewName("index_two");
                   registry.addViewController("/").setViewName("index");
                   registry.addViewController("/enter").setViewName("enter");
-                  registry.addViewController("/ajax").setViewName("MyAjax");
                   registry.addViewController("/wx").setViewName("wx");
                   registry.addViewController("/druid/**").setViewName("4xx");
+                  registry.addViewController("/hwxadmin/**").setViewName("admin");
               }
           };
           return configurer;
@@ -45,8 +45,8 @@ public class myconfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/userimg/**").addResourceLocations("file:D:/LBB2.0/Data/img/userimg/");
-            registry.addResourceHandler("/music/**").addResourceLocations("file:D:/LBB2.0/Data/music/");
+            registry.addResourceHandler("/userimg/**").addResourceLocations("file:D:/hwxGit/LBB2.0/Data/img/userimg/");
+            registry.addResourceHandler("/music/**").addResourceLocations("file:D:/hwxGit/LBB2.0/Data/music/");
         registry.addResourceHandler("/avhwx/**").addResourceLocations("file:D:/迅雷下载/snis-868-C/");
     }
 

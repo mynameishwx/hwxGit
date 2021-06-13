@@ -50,16 +50,16 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                 if(bookmain!=null){
                     if(bookmain.getShowTime()<=0){
                         mapone.put("password","你已被强制下线!");
-                        return "enter";
+                        return "登录失败";
                     }
                 }else {
 
                 }
-                return "main";
+                return "欢迎你,"+accoutuser.getIdname();
         }
         else {
             mapone.put("id","该账号未注册  去注册");
-            return "enter";
+            return "登录失败";
         }
     }
 
@@ -81,7 +81,8 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                         else
                         {
                             map.put("zccg","注册成功，请登录!");
-                           if (accoutService.setbyuser(accoutusertwo)!=0)
+                            int y=accoutService.setbyuser(accoutusertwo);
+                           if (y!=0)
                                return  "enter";
                            else return "5xx";
                         }

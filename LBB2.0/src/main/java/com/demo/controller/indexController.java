@@ -8,6 +8,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,21 +27,29 @@ public class indexController {
     @Autowired
     bookmainService bookmainService;
 
+
    @PostMapping("/dlindex")
+
    public String index_three(@RequestParam(value = "name",defaultValue = "") String id,
                              @RequestParam("password") String password,
                              Map<String,Object> mapone, HttpSession session, HttpServletRequest request){
-                         Subject subject=SecurityUtils.getSubject();
+                        Subject subject= SecurityUtils.getSubject();
                          try {
-                             UsernamePasswordToken token=new UsernamePasswordToken(id,password);
-                             subject.login(token);
-                             System.out.println("hh");
-                             return   enterService.dl_index(id,password,session,request,mapone);
+                            if(id!="" && password!=""){
+                                UsernamePasswordToken token=new UsernamePasswordToken(id,password);
+                                subject.login(token);
+                                String tishi=enterService.dl_index(id,password,session,request,mapone);
+                                mapone.put("return_dl",tishi);
+                                return "index";
+                            }else {
+                                mapone.put("id","密码或账号错误");
+                                return "enter";
+                            }
                          }catch (UnknownAccountException e){
-                             mapone.put("id","账号错误a");
+                             mapone.put("id","用户不存在");
                              return "enter";
                          }catch (IncorrectCredentialsException e){
-                             mapone.put("password","密码错误w");
+                             mapone.put("password","密码错误");
                              return "enter";
                          }
    }

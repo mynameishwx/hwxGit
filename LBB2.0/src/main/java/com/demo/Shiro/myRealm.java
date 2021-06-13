@@ -4,6 +4,7 @@ import com.demo.Service.AccoutService;
 import com.demo.pojo.Accoutuser;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -21,8 +22,8 @@ public class myRealm extends AuthorizingRealm {
     //授权配置
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
-        return null;
+        SimpleAuthorizationInfo simpleAuthenticationInfo=new SimpleAuthorizationInfo();
+        return simpleAuthenticationInfo;
     }
 
 

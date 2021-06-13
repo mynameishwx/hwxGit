@@ -23,8 +23,8 @@ public class shiro {
         Map<String,String> stringStringMap=new HashMap<>();
 
 //        stringStringMap.put("/data/**","authc");
-//
 //        stringStringMap.put("/user","authc");
+        System.out.println("------------------");
         shiroFilterFactoryBean.setLoginUrl("/index");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(stringStringMap);
         return  shiroFilterFactoryBean;
