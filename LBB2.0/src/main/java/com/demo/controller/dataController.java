@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.Service.AccoutService;
 import com.demo.Service.dataService;
 import com.demo.pojo.Accoutuser;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiresPermissions("admin:*:*")
 @RequestMapping(value = "/data",method = RequestMethod.GET)
 public class dataController {
    @Autowired
@@ -64,11 +66,5 @@ public class dataController {
       return  dataService.dataService(model,request,pn);
     }
 
-//music界面跳转
-//    @RequestMapping(value = "/music",method = RequestMethod.GET)
-//    public  String mustic(@RequestParam(value ="pn",defaultValue = "1") Integer integer,Model model){
-//
-//       return  dataService.showmusicService(integer,model);
-//    }
 
 }

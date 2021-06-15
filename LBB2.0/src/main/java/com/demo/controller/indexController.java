@@ -38,6 +38,9 @@ public class indexController {
                             if(id!="" && password!=""){
                                 UsernamePasswordToken token=new UsernamePasswordToken(id,password);
                                 subject.login(token);
+                                if(subject.isPermitted("admin:*:*")){
+                                    System.out.println("admin:admin:admin");
+                                }
                                 String tishi=enterService.dl_index(id,password,session,request,mapone);
                                 mapone.put("return_dl",tishi);
                                 return "index";
