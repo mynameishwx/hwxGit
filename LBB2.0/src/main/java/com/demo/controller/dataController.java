@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,11 @@ public class dataController {
     dataService dataService;
 
 
+
+   @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
+   public  String  user_id(@PathVariable(value = "id") String id,Model model){
+       return dataService.user_id(id,model);
+   }
 
 //    查询
     @RequestMapping(value = "/show",method = RequestMethod.GET)

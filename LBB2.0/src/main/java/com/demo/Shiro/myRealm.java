@@ -27,9 +27,9 @@ public class myRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthenticationInfo=new SimpleAuthorizationInfo();
         Subject subject= SecurityUtils.getSubject();
       String id= (String) subject.getPrincipal();
-
+        System.out.println("我进入权限认证了");
         accoutuser=accoutService.getServiceid(id);
-      if(id=="17370544926"){
+      if(id.equals("hwxadmin")){
           System.out.println("---------------------");
           simpleAuthenticationInfo.addStringPermission("user:*:*");
           simpleAuthenticationInfo.addStringPermission("admin:*:*");

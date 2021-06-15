@@ -59,12 +59,13 @@
       <th scope="col">登录时间</th>
       <th scope="col">注册时间</th>
       <th scope="col">操作</th>
+      <th scope="col">修改</th>
 <!--      <th scope="col">更新时间</th>-->
     </tr>
 <!--查询操作-->
     <tr th:if="${data_yanztwo}"  th:each="user,stat:${serviceid}">
       <td th:text="${stat.count}">&nbsp;</td>
-      <td th:text="${user.idname}">&nbsp;</td>
+      <td th:herf="@{/data/user/{id}(id=${user.idname})}" th:text="${user.idname}">&nbsp;</td>
       <td th:text="${user.sex}">&nbsp;</td>
       <td th:text="${user.id}">&nbsp;</td>
       <td th:text="${user.pass}">&nbsp;</td>
@@ -78,7 +79,7 @@
 <!--    展示-->
     <tr th:if="${data_yanzone}" th:each="user,stat:${page.Records}">
       <td th:text="${stat.count}">&nbsp;</td>
-      <td th:text="${user.idname}">&nbsp;</td>
+      <td th:text="${user.idname}"></td>
       <td th:text="${user.sex}">&nbsp;</td>
       <td th:text="${user.id}">&nbsp;</td>
       <td th:text="${user.pass}">&nbsp;</td>
@@ -87,7 +88,13 @@
 <!--      <td th:text="${user.update_time}" pattern="yyyy-MM-dd HH:mm:ss" ></td>-->
 <!--         <a th:case="0">离线</a>-->
 <!--        <a th:case="1">在线</a>-->
-      </td>
+<!--<td>-->
+<!--  <a th:herf="@{/data/user/{id}(id=${user.id})}">修改</a>-->
+<!--</td>-->
+
+        <td>
+            <a th:href="@{/data/user/{id}(id=${user.id})}">修改</a>
+        </td>
       <td>
         <a th:href="@{/data/delete/{deleteOne}(deleteOne=${user.id},pn=${page.current })}">删除</a>
       </td>
@@ -104,28 +111,16 @@
   </a>
   <a class="page-next" >下一页<i></i></a>
 </div>
-
-<!--                     音乐上传                            -->
-
-<!--<div class="title-line" >-->
-<!--  <span class="tit"  style="font-size: 38px;">音乐上传</span>-->
-<!--</div>-->
-<!--<div>-->
-<!--              <form id="uploadForm" enctype="multipart/form-data">-->
-<!--                   文件:<input type="file" name="file" multiple="multiple"/><br>-->
-<!--              </form>-->
-<!--              <button id="upload">上传文件</button>-->
-<!--</div>-->
 <div class="title-line" >
     <span class="tit"  style="font-size: 38px;">书籍上传</span>
 </div>
-<div>
-    <form action="/bookmain/uploadbook" method="get">
-        <a>书籍名称：</a>  <input type="text" id="bookname"> <br>
-		<a>作者：</a><input type="text" id="bookcreatename"> <br>
-		<a>上传文件：</a><input type="file" id="booktext"  accept="text/plain"><br>
-		<input type="submit" value="添加书籍" onClick="uploadbook();">
-    </form>
-</div>
+<!--<div>-->
+<!--    <form action="/bookmain/uploadbook" method="get">-->
+<!--        <a>书籍名称：</a>  <input type="text" id="bookname"> <br>-->
+<!--		<a>作者：</a><input type="text" id="bookcreatename"> <br>-->
+<!--		<a>上传文件：</a><input type="file" id="booktext"  accept="text/plain"><br>-->
+<!--		<input type="submit" value="添加书籍" onClick="uploadbook();">-->
+<!--    </form>-->
+<!--</div>-->
 </body>
 </html>

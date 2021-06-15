@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public interface dataService extends IService<music> {
+    public String user_id(String id,Model model);
     /*
        搜索展示
      */
