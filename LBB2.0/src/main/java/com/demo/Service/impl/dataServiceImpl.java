@@ -10,6 +10,7 @@ import com.demo.mapper.bookmainmapper;
 import com.demo.mapper.bookmapper;
 import com.demo.pojo.Accoutuser;
 import com.demo.pojo.music;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -42,7 +43,15 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     @Autowired
     bookmainmapper bookmainmapper;
 
+    @Autowired
     Accoutuser accoutuser;
+
+    @Override
+    public String user_id(String id,Model model){
+        accoutuser=accoutmapper.selectById(id);
+        model.addAttribute("acc",accoutuser);
+        return "user_id";
+    }
 
     //查询
     @Override
@@ -99,14 +108,9 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
 
     //展示
     @Override
+    @RequiresPermissions("admin:query:*")
     public String dataService(Model model, HttpServletRequest request, Integer integer) {
         Object one=request.getSession().getAttribute("yanzhen");
-        if(!one.equals("hwxadmin"))
-        {
-            return "index";  //转没有此资源 《 ？》
-        }
-        else
-        {
             Page<Accoutuser> page1= new Page<>(integer,5);
             Page  page= accoutService.page(page1,null);
             long current = page.getCurrent();  //当前页
@@ -117,7 +121,6 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
             model.addAttribute("data_yanzone","true");
             model.addAttribute("data_yanztwo","false");
             return "data";
-        }
     }
 
     @Override

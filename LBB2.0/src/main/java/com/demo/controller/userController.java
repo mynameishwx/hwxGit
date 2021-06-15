@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.Service.dataService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ public class userController {
     @Autowired
     dataService dataService;
 
+    @RequiresPermissions("admin:*:*")
    @GetMapping("/user")
     public  String  userone(HttpServletRequest request, Model model){
         return  dataService.userService(request,model);

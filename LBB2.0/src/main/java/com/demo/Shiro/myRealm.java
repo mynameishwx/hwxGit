@@ -2,11 +2,13 @@ package com.demo.Shiro;
 
 import com.demo.Service.AccoutService;
 import com.demo.pojo.Accoutuser;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,15 @@ public class myRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo simpleAuthenticationInfo=new SimpleAuthorizationInfo();
+        Subject subject= SecurityUtils.getSubject();
+      String id= (String) subject.getPrincipal();
+        System.out.println("我进入权限认证了");
+        accoutuser=accoutService.getServiceid(id);
+      if(id.equals("hwxadmin")){
+          System.out.println("---------------------");
+          simpleAuthenticationInfo.addStringPermission("user:*:*");
+          simpleAuthenticationInfo.addStringPermission("admin:*:*");
+      }
         return simpleAuthenticationInfo;
     }
 

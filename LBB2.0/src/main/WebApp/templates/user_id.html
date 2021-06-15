@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户详情</title>
+    <script>
+        fun
+    </script>
+</head>
+<body>
+<div th:each="user:${acc}" >
+ 昵称:   <a th:text="${user.idname}"></a><br>
+ 性别   <a th:text="${user.sex   }"></a><br>
+ ID:   <a th:text="${user.id    }"></a><br>
+ 密码:   <a th:text="${user.pass  }"></a><br>
+ 登录时间:   <a th:text="${user.idtime}"></a><br>
+ 角色:  <select id="role" name="role"><br>
+    <option value="0">修改为</option>
+    <option value="1">二级管理员</option>
+    <option value="2">三级管理员</option>
+    <option value="3">用户</option>
+</select>
+ 权限: <select id="power" name="power"><br>
+    <option value="0">修改为</option>
+    <option value="1">用户查询</option>
+    <option value="2">管理员查询</option>
+    <option value="4">用户修改</option>
+    <option value="5">管理员修改</option>
+    <option value="6">用户删除</option>
+    <option value="7">管理员修改</option>
+</select>
+    <button type="submit" onclick="submit();" >登录</button>
+</div>
+</body>
+</html>

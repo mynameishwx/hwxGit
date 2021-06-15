@@ -2,7 +2,7 @@ package com.demo.configuration;
 
 import com.demo.comp.MyLocaleResoloer;
 import com.demo.comp.myhand;
-import com.demo.pojo.Accoutuser;
+import com.demo.pojo.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -57,5 +57,25 @@ public class myconfig implements WebMvcConfigurer {
    @Bean
     public Accoutuser Accoutuser(){
         return  new Accoutuser();
+   }
+
+   @Bean
+ public   role role(){
+        return  new role();
+   }
+
+   @Bean
+    public acc_role acc_role(){
+        return  new acc_role();
+   }
+
+   @Bean
+    public power power(){
+        return new power();
+   }
+
+   @Bean
+    public role_power role_power(){
+        return  new role_power();
    }
 }
