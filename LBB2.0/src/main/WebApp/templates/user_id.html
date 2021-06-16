@@ -14,10 +14,10 @@
  ID:   <a th:text="${user.id    }"></a><br>
  密码:   <a th:text="${user.pass  }"></a><br>
  登录时间:   <a th:text="${user.idtime}"></a><br>
- 角色:  <select id="role" name="role"><br>
+ 角色:[[${role_h}]]<select id="role" name="role"><br>
     <option value="0">修改为</option>
-    <option value="1">二级管理员</option>
-    <option value="2">三级管理员</option>
+    <option value="1">管理员</option>
+<!--    <option value="2">三级管理员</option>-->
     <option value="3">用户</option>
 </select>
  权限: <select id="power" name="power"><br>
@@ -29,7 +29,11 @@
     <option value="6">用户删除</option>
     <option value="7">管理员修改</option>
 </select>
-    <button type="submit" onclick="submit();" >登录</button>
+    <button type="submit" onclick="submit();" >修改</button>
+</div>
+<div>
+    增加角色:<input type="text" id="role_1">
+    角色权限:
 </div>
 </body>
 </html>

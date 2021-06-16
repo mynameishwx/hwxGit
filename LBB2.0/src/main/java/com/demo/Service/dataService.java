@@ -30,7 +30,7 @@ public interface dataService extends IService<music> {
 
 
 //           修改个人简介
-    String useroneService(MultipartFile file, String s, Model model);
+    String useroneService(MultipartFile file, String s, Model model,String id);
 
 //    下载音乐
     String musicService(HttpServletRequest request, HttpServletResponse httpServletResponse);

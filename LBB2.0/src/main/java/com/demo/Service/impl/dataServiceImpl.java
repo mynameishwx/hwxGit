@@ -3,13 +3,14 @@ package com.demo.Service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.demo.Service.AccoutService;
+import com.demo.Service.acc_roleService;
 import com.demo.Service.dataService;
-import com.demo.mapper.Accoutmapper;
-import com.demo.mapper.Musicmapper;
-import com.demo.mapper.bookmainmapper;
-import com.demo.mapper.bookmapper;
+import com.demo.Service.roleService;
+import com.demo.mapper.*;
 import com.demo.pojo.Accoutuser;
+import com.demo.pojo.acc_role;
 import com.demo.pojo.music;
+import com.demo.pojo.role;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -46,9 +48,27 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     @Autowired
     Accoutuser accoutuser;
 
+    @Autowired
+    role role;
+
+    @Autowired
+    acc_roleService acc_role;
+
+    @Autowired
+    roleService roleService;
+
+    @Autowired
+    acc_role acc_roletwo;
     @Override
     public String user_id(String id,Model model){
         accoutuser=accoutmapper.selectById(id);
+        acc_roletwo.setAccId(id);
+        Iterator<com.demo.pojo.acc_role> iterator=acc_role.getbyname_hwx(acc_roletwo).iterator();
+       while (iterator.hasNext()){
+           acc_roletwo=iterator.next();
+        role=roleService.getById(acc_roletwo.getRoleId());
+           model.addAttribute("role_h",role.getRoleName());
+       }
         model.addAttribute("acc",accoutuser);
         return "user_id";
     }
@@ -139,11 +159,11 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     }
 
     @Override
-    public String useroneService(MultipartFile file, String name, Model model) {
+    public String useroneService(MultipartFile file, String name, Model model,String id) {
 
         String  tihuan=accoutuser.getImg();
         Accoutuser accoutusert=new Accoutuser();
-        accoutusert.setId(accoutuser.getId());
+        accoutusert.setId(id);
         if(file.getSize()!=0){
             String url="D:/hwxGit/LBB2.0/Data/img/userimg/";
             String imgname=file.getOriginalFilename(); //获取图片名称
