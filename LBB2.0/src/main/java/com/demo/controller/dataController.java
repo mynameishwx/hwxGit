@@ -25,6 +25,12 @@ public class dataController {
     dataService dataService;
 
 
+   @RequestMapping(value = "/updata")
+   @ResponseBody
+   public String  updata(){
+
+       return "";
+   }
 
    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
    public  String  user_id(@PathVariable(value = "id") String id,Model model){
