@@ -63,10 +63,11 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     public String user_id(String id,Model model){
         accoutuser=accoutmapper.selectById(id);
         acc_roletwo.setAccId(id);
+//        List<acc_role> acc_roles=acc_role.getbyname_hwx()
         Iterator<com.demo.pojo.acc_role> iterator=acc_role.getbyname_hwx(acc_roletwo).iterator();
        while (iterator.hasNext()){
            acc_roletwo=iterator.next();
-        role=roleService.getById(acc_roletwo.getRoleId());
+        role=roleService.getByid_mybatis(acc_roletwo.getRoleId());
            model.addAttribute("role_h",role.getRoleName());
        }
         model.addAttribute("acc",accoutuser);

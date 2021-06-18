@@ -21,6 +21,9 @@ public class acc_roleImpl extends ServiceImpl<acc_roleMapper, acc_role> implemen
     @Autowired
     acc_roleMapper acc_roleMapper;
 
+
+
+
 //  查询
     @RequiresPermissions("admin:select:*")
     public  acc_role  getbyid_mybatis(acc_role role){
