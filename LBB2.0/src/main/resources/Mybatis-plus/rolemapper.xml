@@ -5,7 +5,15 @@
         <result column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
     </resultMap>
-    <select id="getbyid" resultType="com.demo.mapper.roleMapper" resultMap="role">
+    <select id="getbyid" resultMap="role" resultType="com.demo.pojo.role">
+        select * from role where roleId=${roleId}
+    </select>
 
+    <select id="getbyname_hwx" resultType="com.demo.pojo.role" resultMap="role">
+        select roleId,roleName from role
+        <where>
+            <if test="roleId!=null and roleId!=''">roleId=${roleId}</if>
+            <if test="roleName!=null and roleName!=''">roleName=${roleName}</if>
+        </where>
     </select>
 </mapper>

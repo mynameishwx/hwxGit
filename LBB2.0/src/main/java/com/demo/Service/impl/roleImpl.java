@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Service
 public class roleImpl extends ServiceImpl<roleMapper,role> implements roleService {
@@ -17,7 +18,20 @@ public class roleImpl extends ServiceImpl<roleMapper,role> implements roleServic
     @Autowired
     role role;
 
-//    查询
+    @Override
+    public List<role> getbyname_hwx(role role){
+        return roleMapper.getbyname_hwx(role);
+    }
+
+
+
+    @Override
+    public com.demo.pojo.role getByid_mybatis(Integer id) {
+        return roleMapper.getbyid(id);
+    }
+
+
+    //    查询
     public  role   getbyid_mybatis(role role){
         try {
              role=roleMapper.selectById(role.getRoleId());

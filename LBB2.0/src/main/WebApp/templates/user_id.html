@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <title>用户详情</title>
     <script>
-        fun
+       function submit(){
+			var role=document.getElementById("role").value;
+			if(role!=0){
+				var  http=new XMLHttpRequest();
+				var data="role="+role;
+				http.onreadystatechange=function(){
+					if(http.readyState==4 && http.status==200){
+					var  okdata=http.responseText;
+					  if(okdata==1){
+						  alert("修改成功");
+					  }else {
+					     alert("修改失败");
+					     }
+					}
+				}
+				http.open("get","/data/updata?"+data,true);
+				http.send();
+			}
+		}
     </script>
 </head>
 <body>
@@ -16,12 +34,12 @@
  登录时间:   <a th:text="${user.idtime}"></a><br>
  角色:[[${role_h}]]<select id="role" name="role"><br>
     <option value="0">修改为</option>
-    <option value="1">管理员</option>
+    <option value="admin">管理员</option>
 <!--    <option value="2">三级管理员</option>-->
-    <option value="3">用户</option>
+    <option value="user">用户</option>
 </select>
  权限: <select id="power" name="power"><br>
-    <option value="0">修改为</option>
+    <option value="0">暂未开放</option>
     <option value="1">用户查询</option>
     <option value="2">管理员查询</option>
     <option value="4">用户修改</option>
@@ -29,7 +47,7 @@
     <option value="6">用户删除</option>
     <option value="7">管理员修改</option>
 </select>
-    <button type="submit" onclick="submit();" >修改</button>
+    <input type="submit" onclick="submit();" value="修改">
 </div>
 <div>
     增加角色:<input type="text" id="role_1">
