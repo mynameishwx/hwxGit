@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>用户详情</title>
-    <script>
+    <script th:inline="javascript">
        function submit(){
 			var role=document.getElementById("role").value;
+			var id=[[${id}]];
 			if(role!=0){
 				var  http=new XMLHttpRequest();
-				var data="role="+role;
+				var data="role="+role+"&id="+id;
 				http.onreadystatechange=function(){
 					if(http.readyState==4 && http.status==200){
 					var  okdata=http.responseText;
-					  if(okdata==1){
+					  if(okdata==1 || okdata==3){
 						  alert("修改成功");
 					  }else {
 					     alert("修改失败");
@@ -28,15 +29,15 @@
 <body>
 <div th:each="user:${acc}" >
  昵称:   <a th:text="${user.idname}"></a><br>
- 性别   <a th:text="${user.sex   }"></a><br>
- ID:   <a th:text="${user.id    }"></a><br>
+ 性别   <a th:text="${user.sex   }" ></a><br>
+ ID:   <a th:text="${user.id    }" id="id" name="id"></a><br>
  密码:   <a th:text="${user.pass  }"></a><br>
  登录时间:   <a th:text="${user.idtime}"></a><br>
  角色:[[${role_h}]]<select id="role" name="role"><br>
     <option value="0">修改为</option>
-    <option value="admin">管理员</option>
+    <option value="2">管理员</option>
 <!--    <option value="2">三级管理员</option>-->
-    <option value="user">用户</option>
+    <option value="1">用户</option>
 </select>
  权限: <select id="power" name="power"><br>
     <option value="0">暂未开放</option>

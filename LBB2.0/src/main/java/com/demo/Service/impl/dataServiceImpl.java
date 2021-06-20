@@ -59,6 +59,34 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
 
     @Autowired
     acc_role acc_roletwo;
+
+
+    public Integer updata_acc_role(String acc_name,Integer rolename){
+        if(acc_name!=null && acc_name!=""){
+            acc_roletwo.setRoleId(null);
+            acc_roletwo.setAccId(acc_name);
+            Iterator<com.demo.pojo.acc_role> iterator=acc_role.getbyname_hwx(acc_roletwo).iterator();
+            while (iterator.hasNext()){
+                acc_roletwo=iterator.next();
+                acc_roletwo.setRoleId(rolename);
+                acc_roletwo.setAccId(acc_name);
+                if(acc_roletwo.getAcc_roleId()!=null)
+              return   acc_role.updata_hwx(acc_roletwo);
+                else System.out.println(acc_roletwo.getAcc_roleId());
+            }
+         if(iterator.hasNext()==false)
+         {
+             acc_roletwo.setRoleId(rolename);
+             acc_roletwo.setAccId(acc_name);
+           int x=  acc_role.insert_hwx(acc_roletwo);
+           return 3;
+         }
+        }
+        return 0;
+    }
+
+
+
     @Override
     public String user_id(String id,Model model){
         accoutuser=accoutmapper.selectById(id);
@@ -70,6 +98,7 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
         role=roleService.getByid_mybatis(acc_roletwo.getRoleId());
            model.addAttribute("role_h",role.getRoleName());
        }
+        model.addAttribute("id",id);
         model.addAttribute("acc",accoutuser);
         return "user_id";
     }

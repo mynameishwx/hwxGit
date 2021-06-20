@@ -7,4 +7,16 @@
             <if test="accId!=null and accId!=''">accId=#{accId}</if>
         </where>
     </select>
+   <select id="insert_hwx" parameterType="com.demo.pojo.acc_role" resultType="integer">
+       insert into  acc_role(accId,roleId) values(#{accId},#{roleId})
+   </select>
+    <update id="updata_hwx" parameterType="com.demo.pojo.role">
+        update acc_role set
+
+        <if test="img!=null and img!=''">img=#{img}</if>
+        <if test="(img!=null and img!='') and (sex!=null and sex!='')">,</if>
+
+        <if test="sex!=null and sex!=''">sex=#{sex}</if>
+        where  id=#{id}
+    </update>
 </mapper>

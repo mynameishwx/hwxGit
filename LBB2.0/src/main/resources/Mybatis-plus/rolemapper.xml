@@ -16,4 +16,5 @@
             <if test="roleName!=null and roleName!=''">roleName=${roleName}</if>
         </where>
     </select>
+
 </mapper>

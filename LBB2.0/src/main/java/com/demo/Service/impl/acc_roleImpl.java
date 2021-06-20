@@ -53,7 +53,31 @@ public class acc_roleImpl extends ServiceImpl<acc_roleMapper, acc_role> implemen
     }
 
     @Override
+    public Integer insert_hwx(com.demo.pojo.acc_role acc_role) {
+        try {
+            roleMapper.insert_hwx(acc_role);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("acc_role插入失败" + acc_role.toString());
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
     public List<acc_role> getbyname_hwx(acc_role role) {
         return acc_roleMapper.getbyuserId_hwx(role);
+    }
+
+    @Override
+    public Integer updata_hwx(com.demo.pojo.acc_role role) {
+        try {
+            int y=roleMapper.updateById(role);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("acc_role更新失败" + acc_role.toString());
+            return 0;
+        }
+        return 1;
     }
 }

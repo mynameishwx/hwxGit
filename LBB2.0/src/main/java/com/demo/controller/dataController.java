@@ -2,8 +2,10 @@ package com.demo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.Service.AccoutService;
+import com.demo.Service.acc_roleService;
 import com.demo.Service.dataService;
 import com.demo.pojo.Accoutuser;
+import com.demo.pojo.acc_role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -27,16 +29,35 @@ public class dataController {
    @Autowired
     dataService dataService;
 
+   @Autowired
+    acc_roleService roleService;
 
+   @Autowired
+    acc_role acc_role;
+
+    /*
+      6.19号任务
+           生成修改用户角色的方法，使用该方法进行用户角色修改
+
+      配置统一异常处理，先将没有权限的用户要使用无权限方法时，统一处理
+      异常代码为   AuthorizationException.class
+
+      再将sql异常统一处理
+
+
+     */
    @RequiresPermissions("admin:updata:*")
    @RequestMapping(value = "/updata")
    @ResponseBody
-   public String  updata(@RequestParam(value = "role")String role){
+   public String  updata(@RequestParam(value = "role")Integer role,@RequestParam(value = "id")String s){
 
-       Subject subject= SecurityUtils.getSubject();
-       String  id = (String) subject.getPrincipal();
+       if(s!=null && !s.equals("")){
+           acc_role.setAccId(s);
+       int tt=   dataService.updata_acc_role(s,role);
+       return  tt+"";
+       }
 
-       return "1";
+       return "0";
    }
 
    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
