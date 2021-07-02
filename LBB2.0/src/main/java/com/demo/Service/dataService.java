@@ -41,4 +41,5 @@ public interface dataService extends IService<music> {
 //    展示音乐
 //    String showmusicService(Integer integer,Model model);
 
+    public  Integer updata_acc_role(String acc_name,Integer rolename);
 }

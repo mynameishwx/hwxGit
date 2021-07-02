@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class powerImpl extends ServiceImpl<powerMapper,power> implements powerService {
 
+
     @Autowired
     powerMapper mapper;
 
@@ -39,5 +40,11 @@ public class powerImpl extends ServiceImpl<powerMapper,power> implements powerSe
             System.out.println("power插入失败" + power.toString());
             return 0;
         }
+    }
+
+    @Override
+    public com.demo.pojo.power getbyid_hwx(Integer id) {
+        power.setPowerId(id);
+        return mapper.getbyidmapper_hwx(power);
     }
 }

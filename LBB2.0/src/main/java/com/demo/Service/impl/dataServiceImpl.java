@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -59,6 +60,36 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
 
     @Autowired
     acc_role acc_roletwo;
+
+
+    public Integer updata_acc_role(String acc_name,Integer rolename){
+        if(acc_name!=null && acc_name!=""){
+            acc_roletwo.setRoleId(null);
+            acc_roletwo.setAccId(acc_name);
+            List<acc_role> acc_roles=new ArrayList<>();
+            acc_roles=acc_role.getbyname_hwx(acc_roletwo);
+            Iterator<com.demo.pojo.acc_role> iterator=acc_roles.iterator();
+            while (iterator.hasNext()){
+                acc_roletwo=iterator.next();
+                acc_roletwo.setRoleId(rolename);
+                acc_roletwo.setAccId(acc_name);
+                if(acc_roletwo.getAcc_roleId()!=null)
+              return   acc_role.updata_hwx(acc_roletwo);
+                else System.out.println(acc_roletwo.getAcc_roleId());
+            }
+         if(iterator.hasNext()==false)
+         {
+             acc_roletwo.setRoleId(rolename);
+             acc_roletwo.setAccId(acc_name);
+           int x=  acc_role.insert_hwx(acc_roletwo);
+           return 3;
+         }
+        }
+        return 0;
+    }
+
+
+
     @Override
     public String user_id(String id,Model model){
         accoutuser=accoutmapper.selectById(id);
@@ -70,6 +101,7 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
         role=roleService.getByid_mybatis(acc_roletwo.getRoleId());
            model.addAttribute("role_h",role.getRoleName());
        }
+        model.addAttribute("id",id);
         model.addAttribute("acc",accoutuser);
         return "user_id";
     }
