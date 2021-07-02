@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface powerMapper extends BaseMapper<power> {
+    power getbyidmapper_hwx(power power);
 }

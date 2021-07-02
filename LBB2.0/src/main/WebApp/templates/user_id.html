@@ -50,7 +50,7 @@
 </select>
     <input type="submit" onclick="submit();" value="修改">
 </div>
-<div>
+<div th:if="${power}">
     增加角色:<input type="text" id="role_1">
     角色权限:
 </div>

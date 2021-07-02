@@ -38,6 +38,7 @@ user	用户拦截器。eg：登录后（authc），第二次没登陆但是有�
         stringStringMap.put("/data/**","authc");
         stringStringMap.put("/user","authc");
         stringStringMap.put("/bookmain/**","authc");
+        stringStringMap.put("/logout","logout");
         shiroFilterFactoryBean.setLoginUrl("/index");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(stringStringMap);
         return  shiroFilterFactoryBean;

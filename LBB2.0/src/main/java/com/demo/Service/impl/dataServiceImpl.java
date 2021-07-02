@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +66,9 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
         if(acc_name!=null && acc_name!=""){
             acc_roletwo.setRoleId(null);
             acc_roletwo.setAccId(acc_name);
-            Iterator<com.demo.pojo.acc_role> iterator=acc_role.getbyname_hwx(acc_roletwo).iterator();
+            List<acc_role> acc_roles=new ArrayList<>();
+            acc_roles=acc_role.getbyname_hwx(acc_roletwo);
+            Iterator<com.demo.pojo.acc_role> iterator=acc_roles.iterator();
             while (iterator.hasNext()){
                 acc_roletwo=iterator.next();
                 acc_roletwo.setRoleId(rolename);

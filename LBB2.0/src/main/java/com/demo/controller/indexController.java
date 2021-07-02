@@ -36,13 +36,23 @@ public class indexController {
                         Subject subject= SecurityUtils.getSubject();
                          try {
                             if(id!="" && password!=""){
-                                UsernamePasswordToken token=new UsernamePasswordToken(id,password);
-                                subject.login(token);
-                                boolean permitted = subject.isPermitted("admin:*:*");
-                                System.out.println(permitted);
-                                String tishi=enterService.dl_index(id,password,session,request,mapone);
-                                mapone.put("return_dl",tishi);
-                                return "index";
+                                String s= (String) subject.getPrincipal();
+                               if(s==null){
+                                   UsernamePasswordToken token=new UsernamePasswordToken(id,password);
+                                   subject.login(token);
+                                   boolean permitted = subject.isPermitted("admin:*:*");
+                                   System.out.println(permitted);
+                                   String tishi=enterService.dl_index(id,password,session,request,mapone);
+                                   String[]  ok=tishi.split("&");
+                                   mapone.put("return_dl",ok[0]);
+                                  if(ok.length>=2){
+                                      mapone.put("return_admin",ok[1]);
+                                  }
+                                   return "index";
+                               }else {
+                                   mapone.put("id","已登录，请退出后再登录！");
+                                   return "enter";
+                               }
                             }else {
                                 mapone.put("id","密码或账号错误");
                                 return "enter";

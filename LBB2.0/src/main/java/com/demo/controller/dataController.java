@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequiresPermissions("admin:*:*")
 @RequestMapping(value = "/data",method = RequestMethod.GET)
 public class dataController {
    @Autowired
@@ -60,12 +59,14 @@ public class dataController {
        return "0";
    }
 
+    @RequiresPermissions("admin:*:*")
    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
    public  String  user_id(@PathVariable(value = "id") String id,Model model){
        return dataService.user_id(id,model);
    }
 
 //    查询
+@RequiresPermissions("admin:query:*")
     @RequestMapping(value = "/show",method = RequestMethod.GET)
     public  String show(@RequestParam(value = "id",defaultValue = "") String id,
                         @RequestParam(value = "sex",defaultValue = "")String sex,
@@ -93,6 +94,7 @@ public class dataController {
        RedirectAttributes 这个用于重定向中加参数
      */
 //删除操作
+    @RequiresPermissions("admin:delete:*")
     @RequestMapping(value = "/delete/{deleteOne}",method = RequestMethod.GET)
     public  String  delete(@PathVariable(value = "deleteOne") String deleteOne
             , @RequestParam(value = "pn",defaultValue = "1") Integer pn

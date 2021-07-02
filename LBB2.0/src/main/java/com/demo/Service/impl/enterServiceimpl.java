@@ -2,11 +2,14 @@ package com.demo.Service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.demo.Service.AccoutService;
+import com.demo.Service.acc_roleService;
 import com.demo.Service.enterService;
 import com.demo.comp.myhand;
 import com.demo.mapper.Accoutmapper;
 import com.demo.pojo.Accoutuser;
+import com.demo.pojo.acc_role;
 import com.demo.pojo.bookmain;
+import com.demo.pojo.role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> implements enterService {
 
+
+    @Autowired
+    acc_role acc_role;
     @Autowired
     AccoutService accoutService;
 
@@ -28,6 +36,9 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
 
     @Autowired
     bookmainimpl bookmainimpl;
+
+    @Autowired
+    acc_roleService acc_roleService;
      @Override
     public String dl_index(String id, String password, HttpSession session,HttpServletRequest request, Map<String,Object> mapone) {
         if((accoutuser=accoutService.getServiceid(id))!=null){
@@ -41,10 +52,7 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
 
                 accoutService.setServiceIdtime(idtime,id);  //写入登录时间
                 session.setAttribute("yanzhen",id);  //登录拦截器
-                if(id.equals("hwxadmin"))
-                {
-                    mapone.put("admin","后台管理");
-                }
+
                 bookmain bookmain=new bookmain();
                 bookmain=bookmainimpl.mybatis_getmajor(id);
                 if(bookmain!=null){
@@ -55,6 +63,16 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                 }else {
 
                 }
+                acc_role.setAccId(id);
+          List<acc_role> acc_roles =acc_roleService.getbyname_hwx(acc_role);
+            Iterator<acc_role>  iterator=acc_roles.iterator();
+          while (iterator.hasNext()){
+              acc_role=iterator.next();
+              Integer integer= acc_role.getRoleId();
+              if(integer.equals(2) || integer.equals(3)){
+                  return "欢迎你,"+accoutuser.getIdname()+"&"+"/data";
+              }
+          }
                 return "欢迎你,"+accoutuser.getIdname();
         }
         else {
@@ -81,6 +99,9 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                         else
                         {
                             map.put("zccg","注册成功，请登录!");
+                            acc_role.setAccId(accoutusertwo.getId());
+                            acc_role.setRoleId(1);
+                            acc_roleService.insert_hwx(acc_role);
                             int y=accoutService.setbyuser(accoutusertwo);
                            if (y!=0)
                                return  "enter";

@@ -9,4 +9,5 @@ import java.util.List;
 
 @Mapper
 public interface role_powerMapper extends BaseMapper<role_power> {
+    List<role_power> getbyrole_hwxmapper(role_power power);
 }

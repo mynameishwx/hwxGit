@@ -14,5 +14,5 @@ public interface acc_roleMapper extends BaseMapper<acc_role> {
 
    Integer insert_hwx(acc_role acc_role);
 
-   Integer updata_hwx(role role);
+   Integer updata_hwx(acc_role role);
 }

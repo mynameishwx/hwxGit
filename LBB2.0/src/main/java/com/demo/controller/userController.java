@@ -21,7 +21,7 @@ public class userController {
     @Autowired
     dataService dataService;
 
-    @RequiresPermissions("admin:*:*")
+    @RequiresPermissions("user:query:*")
    @GetMapping("/user")
     public  String  userone(HttpServletRequest request, Model model){
         return  dataService.userService(request,model);

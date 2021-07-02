@@ -72,7 +72,7 @@ public class acc_roleImpl extends ServiceImpl<acc_roleMapper, acc_role> implemen
     @Override
     public Integer updata_hwx(com.demo.pojo.acc_role role) {
         try {
-            int y=roleMapper.updateById(role);
+            int y=acc_roleMapper.updata_hwx(role);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("acc_role更新失败" + acc_role.toString());
