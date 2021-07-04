@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.demo.mapper.role_powerMapper">
-    <resultMap id="role_power" type="com.demo.pojo.role_power">
-        <result property="role_powerId" column="role_powerId"/>
-        <result property="roleId" column="roleId"/>
-        <result property="powerId" column="powerId"/>
-    </resultMap>
     <select id="getbyrole_hwxmapper" resultType="com.demo.pojo.role_power" resultMap="role_power">
           select * from  role_power
         <where>
             <if test="roleId!=null and roleId!=''">roleId=#{roleId}</if>
         </where>
     </select>
+        <resultMap id="role_power" type="com.demo.pojo.role_power">
+            <result property="role_powerId" column="role_powerId"/>
+            <result property="roleId" column="roleId"/>
+            <result property="powerId" column="powerId"/>
+        </resultMap>
 </mapper>
