@@ -10,14 +10,5 @@ import javax.sql.DataSource;
 
 @SpringBootTest
 public class LbbApplicationTests {
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-	@Autowired
-	DataSource dataSource;
-	@Test
-	void contextLoads() {
-		Long l = jdbcTemplate.queryForObject("select count(*)  from  hwx_one",Long.class);
-		System.out.print("有-》》》》》》"+l);
-		System.out.print(dataSource.getClass());
-	}
+
 }

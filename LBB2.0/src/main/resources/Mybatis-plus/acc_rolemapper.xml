@@ -7,7 +7,7 @@
         <result column="roleId" property="roleId"/>
     </resultMap>
     <select id="getbyuserId_hwx" resultType="com.demo.pojo.acc_role" resultMap="acc_role">
-        select acc_roleId,accId,roleId from acc_role
+        select * from acc_role
         <where>
             <if test="accId!=null and accId!=''">accId=#{accId}</if>
         </where>
