@@ -1,5 +1,10 @@
-spring:
+# 禁止Actuator监控Redis连接
+management:
+  health:
+    redis:
+      enabled: false
 
+spring:
   profiles:
     active: dev
 

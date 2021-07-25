@@ -9,8 +9,10 @@ myenvironment:
   name: 开发环境
 spring:
   datasource:
+    #localhost
+    #121.5.199.228
 #  zeroDateTimeBehavior=convertToNull&autoReconnect=true&allowMultiQueries=true  Asia/Shanghai   GMT%2B8 ->这个代表东八区
-    url: jdbc:mysql://localhost:3306/hwx?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&allowMultiQueries=true&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://121.5.199.228:3306/hwx?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&allowMultiQueries=true&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: 123456
     filters: wall,mergeStat

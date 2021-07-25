@@ -100,7 +100,7 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
                         {
                             map.put("zccg","注册成功，请登录!");
                             acc_role.setAccId(accoutusertwo.getId());
-                            acc_role.setRoleId(1);
+                            acc_role.setRoleId(1); //默认注册为用户
                             acc_roleService.insert_hwx(acc_role);
                             int y=accoutService.setbyuser(accoutusertwo);
                            if (y!=0)

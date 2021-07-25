@@ -11,16 +11,21 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 
 public class indexController {
+    @Autowired
+    RedisTemplate redisTemplate;
+
     @Autowired
     enterService  enterService;
 
@@ -34,7 +39,7 @@ public class indexController {
                              @RequestParam("password") String password,
                              Map<String,Object> mapone, HttpSession session, HttpServletRequest request){
                         Subject subject= SecurityUtils.getSubject();
-                         try {
+                        try {
                             if(id!="" && password!=""){
                                 String s= (String) subject.getPrincipal();
                                if(s==null){
@@ -48,6 +53,12 @@ public class indexController {
                                   if(ok.length>=2){
                                       mapone.put("return_admin",ok[1]);
                                   }
+                                   if(redisTemplate.opsForValue().get(id)!=null)
+                                       redisTemplate.delete(id);
+                                   if(redisTemplate.opsForValue().get(id+"_time")!=null){
+                                       mapone.put("id","已锁定，请2分钟后再登录！");
+                                       return  "enter";
+                                   }
                                    return "index";
                                }else {
                                    mapone.put("id","已登录，请退出后再登录！");
@@ -61,6 +72,18 @@ public class indexController {
                              mapone.put("id","用户不存在");
                              return "enter";
                          }catch (IncorrectCredentialsException e){
+                            int zhi;
+                            if(redisTemplate.opsForValue().get(id)==null)
+                                 redisTemplate.opsForValue().set(id,1);
+                             else
+                             {
+                                zhi= (int) redisTemplate.opsForValue().get(id);
+                                 redisTemplate.opsForValue().set(id,zhi+1);
+                             }
+                            zhi= (int) redisTemplate.opsForValue().get(id);
+                             if(zhi==3){
+                                 redisTemplate.opsForValue().set(id+"_time",0,2, TimeUnit.MINUTES);
+                             }
                              mapone.put("password","密码错误");
                              return "enter";
                          }
