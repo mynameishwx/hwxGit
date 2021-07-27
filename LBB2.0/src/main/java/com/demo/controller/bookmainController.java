@@ -59,11 +59,9 @@ public class bookmainController{
        }
       if(ob!=null && ob!=""){
           bookmain= bookmainService.getById((String )ob);
-
               bookmain.setBookclass(bookname);
               bookmain.setLoin(time);
               bookmainService.updateById(bookmain);
-
       }
         return  "books";
     }

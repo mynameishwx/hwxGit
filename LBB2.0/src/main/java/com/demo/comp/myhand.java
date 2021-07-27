@@ -1,7 +1,9 @@
 package com.demo.comp;
 
 import com.alibaba.druid.util.StringUtils;
+import com.demo.mapper.bookmainmapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,22 +11,30 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class myhand implements HandlerInterceptor {
-
+    private  static RedisTemplate redisTemplate;
+    @Autowired
+   public void setRedisTemplate(RedisTemplate redisTemplate){
+        myhand.redisTemplate=redisTemplate;
+    }
 //   这个方法在controller前执行，用来拦截请求
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         Object  user=request.getSession().getAttribute("yanzhen");
          if(user!=null){
-           boolean tt=true;
-           tt=new bookdate().pollinguser((String) user,request);
-           if(tt==false){
-               request.setAttribute("tishi","请先登录");
-               response.sendRedirect("/enter");
+//           boolean tt=true;
+             if (redisTemplate.opsForValue().get((String) user) == null) {
+                 request.setAttribute("tishi","请先登录");
+                 response.sendRedirect("/enter");
 //             request.getRequestDispatcher("/enter").forward(request,response);
-               return  false;
-           }else
+                 return  false;
+             } else {
+                 redisTemplate.opsForValue().set((String) user, 1, 1, TimeUnit.MINUTES);
+             }
+//           tt=new bookdate().pollinguser((String) user,request);
              return  true;
          }
          else

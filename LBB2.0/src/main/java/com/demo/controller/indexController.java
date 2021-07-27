@@ -48,17 +48,23 @@ public class indexController {
                                    boolean permitted = subject.isPermitted("admin:*:*");
                                    System.out.println(permitted);
                                    String tishi=enterService.dl_index(id,password,session,request,mapone);
+
+//                                 用户和管理员界面区分
                                    String[]  ok=tishi.split("&");
                                    mapone.put("return_dl",ok[0]);
-                                  if(ok.length>=2){
-                                      mapone.put("return_admin",ok[1]);
-                                  }
+                                   if(ok.length>=2){
+                                       mapone.put("return_admin",ok[1]);
+                                   }
+
+//                                   密码错误三次锁定
                                    if(redisTemplate.opsForValue().get(id)!=null)
                                        redisTemplate.delete(id);
                                    if(redisTemplate.opsForValue().get(id+"_time")!=null){
                                        mapone.put("id","已锁定，请2分钟后再登录！");
                                        return  "enter";
                                    }
+//                                   用户在线离线判断
+                                   redisTemplate.opsForValue().set(id,1,1,TimeUnit.MINUTES);
                                    return "index";
                                }else {
                                    mapone.put("id","已登录，请退出后再登录！");
