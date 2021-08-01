@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/enterOne.css">
+    <link rel="stylesheet" href="css/enterTwo.css">
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>图书馆管理员</title>
+    <script>
+    function   uploadbook(){
+			 var bookname=document.getElementById("bookname").value;
+			 var boocreate=document.getElementById("bookcreatename").value;
+			 var bookfilename=document.getElementById("booktext").files[0];
+			 var bookfile=new FormData();
+			 alert(bookfilename.name+"->"+bookfilename);
+			 if(bookname=="" || boocreate==""){
+				 alert("书籍名称或作者名称为空 !");
+			 }else{
+				 var xmmlhttp=new XMLHttpRequest();
+
+				 xmmlhttp.onreadystatechange=function(){
+
+				 }
+				 xmmlhttp.open("get","/bookmain/uploadbook",true);
+				 xmmlhttp.send(bookfile);
+			 }
+		 }
+		function  sc(){
+
+			var xmlhttp=new XMLHttpRequest();
+
+            var name=document.getElementById("sc_bookname").value;
+			var create=document.getElementById("sc_bookcreate").value;
+			alert(name+"----"+create);
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				   alert("修改成功");
+				}
+				if(xmlhttp.status==500){
+				alert("后台程序错误");
+				}
+
+			}
+			xmlhttp.open("post","/?"+data,true);
+			xmlhttp.send();
+		}
+	</script>
+</head>
+<body>
+<!--查询-->
+<div class="title-line">
+    <span class="tit"  style="font-size: 38px;">书籍查询</span>
+</div>
+<div>
+
+</div>
+<!-- 借阅-->
+<div class="title-line">
+    <span class="tit"  style="font-size: 38px;">图书借阅</span>
+</div>
+<div>
+
+</div>
+<!-- 上传 -->
+<div class="title-line">
+    <span class="tit"  style="font-size: 38px;">图书上传</span>
+</div>
+<div>
+        <form action="/bookmain/uploadbook" method="post" enctype="multipart/form-data">
+            <a>上传文件：</a><input type="file" id="booktext" name="booktext" ><br>
+            <a>书籍名称：</a>  <input type="text" id="bookname" name="bookname"> <br>
+    		<a>作者：</a><input type="text" id="bookcreatename" name="bookcreate"> <br>
+
+    		<input type="submit" value="添加书籍" >
+<!--            onClick="uploadbook();" -->
+        </form>
+</div>
+
+</body>
+</html>

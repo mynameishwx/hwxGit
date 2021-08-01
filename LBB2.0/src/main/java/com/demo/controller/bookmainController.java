@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Date;
@@ -66,24 +68,23 @@ public class bookmainController{
         return  "books";
     }
 
-    @GetMapping("/uploadbook")
-    @ResponseBody
-    public  String uploadbook(@RequestParam("bookfile")MultipartFile file){
+   @PostMapping("/uploadbook")
+    public  String uploadbook(@RequestParam("booktext")MultipartFile file
+           ,@RequestParam("bookname")String bookname){
+
         try {
-            byte[] bytes=new byte[1024*1024];
-            ByteBuffer byteBuffer=ByteBuffer.allocate(1024*1024);
-            byteBuffer.put(file.getBytes());
-            byteBuffer.flip();
-            bytes=new byte[1024*1024];
-            byteBuffer.get(bytes);
-            String hh=new String(bytes,0,byteBuffer.limit());
-            System.out.println(hh);
+            String url="E:/Git/LBB2.0/Data/text/";
+           if(file.getSize()>=0 && bookname!=null&&bookname!=""){
+               FileOutputStream fileOutputStream=new FileOutputStream(url+bookname+".text");
+               fileOutputStream.write(file.getBytes());
+               fileOutputStream.close();
+           }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  "ok";
+        return  "index";
     }
 
 
