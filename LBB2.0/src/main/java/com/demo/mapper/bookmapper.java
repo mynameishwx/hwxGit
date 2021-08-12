@@ -10,4 +10,8 @@ import java.util.List;
 @Mapper
 public interface bookmapper extends BaseMapper<book> {
       public List<book>  getbookclass(String bookclass);
+
+      public Integer insert_hwx(book book);  //插入
+
+      
 }

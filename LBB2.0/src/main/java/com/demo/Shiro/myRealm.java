@@ -55,7 +55,6 @@ public class myRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthenticationInfo=new SimpleAuthorizationInfo();
         Subject subject= SecurityUtils.getSubject();
       String id= (String) subject.getPrincipal();
-        System.out.println("我进入权限认证了");
         accoutuser=accoutService.getServiceid(id);
       List<acc_role> acc_roles=new ArrayList<>();
         acc_role.setAccId(id);

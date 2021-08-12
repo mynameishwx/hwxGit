@@ -78,4 +78,9 @@ public class myconfig implements WebMvcConfigurer {
     public role_power role_power(){
         return  new role_power();
    }
+
+   @Bean
+    public book book(){
+        return new book();
+   }
 }

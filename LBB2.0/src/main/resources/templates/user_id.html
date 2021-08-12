@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>用户详情</title>
@@ -36,6 +36,7 @@
  角色:[[${role_h}]]<select id="role" name="role"><br>
     <option value="0">修改为</option>
     <option value="2">管理员</option>
+    <option value="3">图书馆管理员</option>
 <!--    <option value="2">三级管理员</option>-->
     <option value="1">用户</option>
 </select>
@@ -50,7 +51,7 @@
 </select>
     <input type="submit" onclick="submit();" value="修改">
 </div>
-<div th:if="${power}">
+<div>
     增加角色:<input type="text" id="role_1">
     角色权限:
 </div>

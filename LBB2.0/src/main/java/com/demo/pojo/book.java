@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.util.Date;
 
@@ -12,18 +13,27 @@ import java.util.Date;
 @TableName("book")
 public class book {
 
-     //书籍名称
     @TableId("bookName")
+    private  Integer  bookId;
+
+     //书籍名称
+    @Column("bookName")
     private String bookName;
 
     public book() {
     }
 
     //书籍作者
-    private String bookCreateName;
+    @Column("bookCreate")
+    private String bookCreate;
 
     //类别
+    @Column("bookclass")
     private  String  bookclass;
+
+//    内容
+    @Column("booktext")
+    private  String  booktext;
 
     //创建时间
     @TableField(value = "create_time" ,fill = FieldFill.INSERT)

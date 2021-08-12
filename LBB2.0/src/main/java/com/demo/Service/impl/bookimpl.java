@@ -22,7 +22,21 @@ public class bookimpl extends ServiceImpl<bookmapper, book> implements bookServi
            return  bookmapper.selectById(name);
        }
 
-       //插入
+    @Override
+    public Integer insert_hwx_s(book book) {
+
+     return   bookmapper.insert_hwx(book);
+
+    }
+
+    @Override
+    public Integer insert_mybatis_s(book book) {
+
+        return bookmapper.insert(book);
+
+    }
+
+    //插入
        @Override
        public  Integer insert_mybatis(book book){
            return  bookmapper.insert(book);

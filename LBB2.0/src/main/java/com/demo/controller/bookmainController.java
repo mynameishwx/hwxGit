@@ -7,6 +7,7 @@ import com.demo.Service.impl.bookmainimpl;
 import com.demo.comp.bookdate;
 import com.demo.pojo.book;
 import com.demo.pojo.bookmain;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,23 +69,18 @@ public class bookmainController{
         return  "books";
     }
 
+    @RequiresPermissions("admin:book:*")
    @PostMapping("/uploadbook")
-    public  String uploadbook(@RequestParam("booktext")MultipartFile file
-           ,@RequestParam("bookname")String bookname){
-
-        try {
-            String url="E:/Git/LBB2.0/Data/text/";
-           if(file.getSize()>=0 && bookname!=null&&bookname!=""){
-               FileOutputStream fileOutputStream=new FileOutputStream(url+bookname+".text");
-               fileOutputStream.write(file.getBytes());
-               fileOutputStream.close();
-           }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public  String uploadbook(@RequestParam(value = "booktext")MultipartFile file
+           ,@RequestParam(value = "bookname",defaultValue = "")String bookname
+           ,@RequestParam(value = "bookCreate",defaultValue = "")String bookCreate){
+    if(file.getSize()>0 && !bookname.equals("")&&!bookCreate.equals("")){
+        bookmainService.insert_hwx_book(file,bookname,bookCreate);
         return  "index";
+    }else {
+        System.out.println("|bookname=" + bookname + "|bookcreate=" + bookCreate+"|");
+        return "5xx";
+    }
     }
 
 

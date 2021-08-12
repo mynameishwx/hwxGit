@@ -9,6 +9,10 @@ public interface bookService extends IService<book> {
 
     public book getbyid_mybatis(String name);
 
+    public  Integer insert_hwx_s(book book);
+
+    public  Integer insert_mybatis_s(book book);
+
     public  Integer insert_mybatis(book book);
 
     public List<book> getservicevlass(String name);
