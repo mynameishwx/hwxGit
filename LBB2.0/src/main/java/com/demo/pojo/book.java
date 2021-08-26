@@ -13,19 +13,19 @@ import java.util.Date;
 @TableName("book")
 public class book {
 
-    @TableId("bookName")
-    private  Integer  bookId;
+    @TableId("bookid")
+    private  Integer  bookid;
 
      //书籍名称
-    @Column("bookName")
-    private String bookName;
+    @Column("bookname")
+    private String bookname;
 
     public book() {
     }
 
     //书籍作者
-    @Column("bookCreate")
-    private String bookCreate;
+    @Column("bookcreate")
+    private String bookcreate;
 
     //类别
     @Column("bookclass")

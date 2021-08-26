@@ -13,5 +13,5 @@ public interface bookmapper extends BaseMapper<book> {
 
       public Integer insert_hwx(book book);  //插入
 
-      
+      public  List<book> getbook_hwx(book book);
 }

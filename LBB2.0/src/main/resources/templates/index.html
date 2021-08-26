@@ -11,7 +11,7 @@
 <body background="images/backgroundTwol.jpg">
 <div id="top">
 	<img src="images/hwx.png" height="55" width="160"/>
-	<img src="images/user.jpg" height="40" width="30"/>
+	<a><img src=""> </a>
 		<a th:text="${return_dl}"></a>
 </div>
 <div id="navbg" th:fragment="copy">
@@ -27,8 +27,10 @@
 <div class="two">
 	<a th:href="@{/index_two}">注册</a><br>
 	<a th:href="@{/enter}">登录</a><br>
-    <a th:href="@{${return_admin}}">[[${return_admin}]]</a>
 	<a th:href="@{/logout}">退出登录</a>
+</div>
+<div th:if="${panduan} eq 1">
+	<a th:href="@{${return_admin}}">[[${return_admin}]]</a>
 </div>
 </body>
 </html>

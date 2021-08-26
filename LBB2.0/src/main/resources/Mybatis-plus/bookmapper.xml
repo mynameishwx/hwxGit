@@ -2,21 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.demo.mapper.bookmapper">
     <resultMap id="book" type="com.demo.pojo.book">
-        <result column="bookId" property="bookId"/>
-        <result column="bookName" property="bookName"/>
-        <result column="bookCreate" property="bookCreate"/>
+        <result column="bookid" property="bookid"/>
+        <result column="bookname" property="bookname"/>
+        <result column="bookcreate" property="bookcreate"/>
         <result column="booktext" property="booktext"/>
         <result column="create_time" property="create_time"/>
         <result column="update_time" property="update_time"/>
         <result column="bookclass" property="bookclass"/>
     </resultMap>
     <select id="insert_hwx" resultMap="book" parameterType="com.demo.pojo.book">
-        insert into book(bookName,bookCreate,bookclass,booktext)  values(#{bookName},#{bookCreate}
+        insert into book(bookname,bookcreate,bookclass,booktext)  values(#{bookname},#{bookcreate}
         ,#{bookclass},#{booktext})
 
     </select>
     <select id="getbookclass" resultType="com.demo.pojo.book" resultMap="book">
-         select booName,bookCreateName,create_time,update_time,bookclass from book  where
+         select booname,bookcreate,create_time,update_time,bookclass from book  where
          bookclass=#{bookclass}
+    </select>
+
+    <select id="getbook_hwx" resultMap="book" resultType="com.demo.pojo.book">
+        select   bookid,bookname,bookcreate,booktext,create_time,update_time,bookclass  from book
+        <where>
+            <if test="bookid!=null and bookid!=''" >bookid=#{bookid}</if>
+            <if test="bookid!=null and bookid!='' and bookname!=null and bookname!=''">or</if>
+            <if test="bookname!=null and bookname!=''">bookname=#{bookname}</if>
+            <if test="bookname!=null and bookname!='' and bookcreate!=null and bookcreate!=''">or</if>
+            <if test="bookcreate!=null and bookcreate!=''">bookcreate=#{bookcreate}</if>
+            <if test="bookcreate!=null and bookcreate!='' and  bookclass!=null and bookclass!=''">or</if>
+            <if test="bookclass!=null and bookclass!=''">bookclass=#{bookclass}</if>
+        </where>
     </select>
 </mapper>

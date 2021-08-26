@@ -1,81 +1,58 @@
 package com.demo.controller;
 
-import com.demo.Service.bookService;
-import com.demo.Service.bookmainService;
+import com.demo.Service.bookadmin_service;
 import com.demo.Service.impl.bookimpl;
-import com.demo.Service.impl.bookmainimpl;
-import com.demo.comp.bookdate;
 import com.demo.pojo.book;
-import com.demo.pojo.bookmain;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+
+import java.awt.print.Book;
 
 @Controller
 @RequestMapping("/bookmain")
 public class bookmainController{
+
+
     @Autowired
-    bookmainService bookmainService;
+    bookadmin_service bookadmin_service;
+
+    @Autowired
+    book book;
 
     @Autowired
     bookimpl bookimpl;
 
-    @Autowired
-    bookmainimpl bookmainimpl;
-
-    bookmain bookmain;
-    @GetMapping("")
-    public  String  aotobookmain(HttpServletRequest request,Map map){
-        Object id=request.getSession().getAttribute("yanzhen");
-        bookmain=new bookmain();
-        bookmain=bookmainService.mybatis_getmajor((String) id);
-        if(bookmain!=null){
-            if(bookmain.getMajor()!=null && bookmain.getMajor()!=""){
-                String[]  maint=bookmain.getMajor().split(",");
-                map.put("main",maint[0]);
-                map.put("Secondary",maint[1]);
-            }
-        }
-        return "bookmain";
+    @GetMapping("/books")
+    public  String  booksname(@RequestParam(value = "bookname") String bookname,Model model){
+     if(bookname!=""){
+         model.addAttribute("text",bookadmin_service.booksname(bookname));
+         return  "books";
+     }else
+        return "5xx";
     }
 
-    @GetMapping("/books/{name}")
-    public  String  books(@PathVariable("name") String bookname,HttpServletRequest request){
-        Object o=request.getSession().getAttribute("yanzhen");
-        Date date=new Date();
-        long time=date.getTime();
-        Object ob=request.getSession().getAttribute("yanzhen");
-        bookmain bookmain=new bookmain();
-       if(bookname!=null) {
-//           List<book> bookmains = bookimpl.getservicevlass(bookname);
-       }
-      if(ob!=null && ob!=""){
-          bookmain= bookmainService.getById((String )ob);
-              bookmain.setBookclass(bookname);
-              bookmain.setLoin(time);
-              bookmainService.updateById(bookmain);
-      }
-        return  "books";
+    @RequiresPermissions("admin:book:*")
+    @GetMapping("/admin")
+    public String  bookadmin(@RequestParam(value = "pn",defaultValue = "1")Integer pn,Model model){
+
+        return bookadmin_service.show_book(model,pn);
     }
 
     @RequiresPermissions("admin:book:*")
    @PostMapping("/uploadbook")
     public  String uploadbook(@RequestParam(value = "booktext")MultipartFile file
            ,@RequestParam(value = "bookname",defaultValue = "")String bookname
-           ,@RequestParam(value = "bookCreate",defaultValue = "")String bookCreate){
+           ,@RequestParam(value = "bookCreate",defaultValue = "")String bookCreate
+           ,@RequestParam(value = "class")String bookclass){
     if(file.getSize()>0 && !bookname.equals("")&&!bookCreate.equals("")){
-        bookmainService.insert_hwx_book(file,bookname,bookCreate);
+        book.setBookname(bookname);
+        book.setBookcreate(bookCreate);
+        book.setBookclass(bookclass);
+        bookimpl.insert_hwx_book(file,book);
         return  "index";
     }else {
         System.out.println("|bookname=" + bookname + "|bookcreate=" + bookCreate+"|");

@@ -6,14 +6,13 @@ import com.demo.Service.AccoutService;
 import com.demo.Service.acc_roleService;
 import com.demo.Service.dataService;
 import com.demo.Service.roleService;
-import com.demo.mapper.*;
+import com.demo.mapper.Accoutmapper;
+import com.demo.mapper.Musicmapper;
 import com.demo.pojo.Accoutuser;
 import com.demo.pojo.acc_role;
 import com.demo.pojo.music;
 import com.demo.pojo.role;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,9 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,8 +43,6 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     @Autowired
     Accoutmapper accoutmapper;
 
-    @Autowired
-    bookmainmapper bookmainmapper;
 
     @Autowired
     Accoutuser accoutuser;
@@ -142,20 +138,19 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
        if(!delete.equals("hwxadmin"))
        {
            Accoutuser getid = accoutmapper.getid(delete);
-           String img = getid.getImg();
-           if(!img.equals("hwx")){
-               String url="D:/LBB2.0/Data/img/userimg/"+img+".jpg";
-               File file=new File(url);
-               if(file.exists()){
-                   file.delete();
-               }
-           }
+////           String img = getid.getImg();
+//           if(!img.equals("hwx")){
+//               String url="/home/Data/img/userimg/"+img+".jpg";
+//               File file=new File(url);
+//               if(file.exists()){
+//                   file.delete();
+//               }
+//           }
            accoutService.removeById(delete);
 
            accoutuser =new Accoutuser();
            accoutuser.setId(delete);
            accoutService.mydeletebyid(accoutuser);  //实际删除
-           bookmainmapper.deleteById(delete); //删除专业表中的数据
        }
         attributes.addAttribute(pn);  //重定向中加参数
         return "redirect:/data";
@@ -183,7 +178,25 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
         Object o=request.getSession().getAttribute("yanzhen");
         //查询登录用户的用户名
         accoutuser= accoutService.getById(o.toString());
-            String  ceshi="/userimg/"+accoutuser.getImg()+".jpg";
+
+        byte[] bytes=accoutuser.getImg();
+        String   ceshi="";
+        String  url="D:/Data/buffer/userimg/"+accoutuser.getId()+".jpg";
+        if(bytes!=null){
+            File file=new File(url);
+            try {
+
+                FileOutputStream fileOutputStream=new FileOutputStream(file);
+                fileOutputStream.write(bytes);
+                ceshi="/userimg/"+accoutuser.getId()+".jpg";
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+          ceshi="/images/hwx.jpg";
+        }
             model.addAttribute("img",ceshi);
 //       昵称
         model.addAttribute("idname",accoutuser.getIdname());
@@ -196,29 +209,18 @@ public class dataServiceImpl extends ServiceImpl<Musicmapper,music> implements d
     @Override
     public String useroneService(MultipartFile file, String name, Model model,String id) {
 
-        String  tihuan=accoutuser.getImg();
         Accoutuser accoutusert=new Accoutuser();
         accoutusert.setId(id);
         if(file.getSize()!=0){
-            String url="E:/Git/LBB2.0/Data/img/userimg/";
-            String imgname=file.getOriginalFilename(); //获取图片名称
-            //用时间来编号用户头像
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMddHHmmss");
-            Date date = new Date(System.currentTimeMillis());
-            String  zctime=formatter.format(date);
-            tihuan=zctime;
+            byte[]  img=new byte[(int) file.getSize()];
             try {
-                FileOutputStream piOutputStream=new FileOutputStream(url+zctime+".jpg");
-                piOutputStream.write(file.getBytes());//获取字节流直接写入到磁盘内
-                piOutputStream.close();//关闭字节流
-
-                //自己的修改函数
-//                accoutmapper.alteruser(accoutusert);
+                System.out.println(file.getSize());
+                InputStream inputStream=file.getInputStream();
+                inputStream.read(img);
+                accoutusert.setImg(img);
 
                 //乐观锁的先查询
                 accoutusert=accoutmapper.selectById(accoutusert.getId());
-
-                accoutusert.setImg(zctime);
 
                 //mybatisplus的修改函数
                 accoutmapper.updateById(accoutusert);

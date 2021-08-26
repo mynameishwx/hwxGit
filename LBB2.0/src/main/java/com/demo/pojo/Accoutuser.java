@@ -29,7 +29,7 @@ public class Accoutuser {
     @TableField(value = "deleted",fill = FieldFill.INSERT)
     private  Integer  deleted;  // 逻辑删除
 
-    private  String  img;    //头像id
+    private  byte[]  img;    //头像id
 
 
     @TableField(value = "create_time",fill = FieldFill.INSERT)

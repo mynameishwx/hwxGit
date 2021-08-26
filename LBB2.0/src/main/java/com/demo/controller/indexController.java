@@ -1,14 +1,11 @@
 package com.demo.controller;
 
-import com.demo.Service.bookmainService;
 import com.demo.Service.enterService;
 import com.demo.pojo.Accoutuser;
-import com.demo.pojo.bookmain;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,8 +26,7 @@ public class indexController {
     @Autowired
     enterService  enterService;
 
-    @Autowired
-    bookmainService bookmainService;
+
 
 
    @PostMapping("/dlindex")
@@ -53,6 +49,7 @@ public class indexController {
                                    String[]  ok=tishi.split("&");
                                    mapone.put("return_dl",ok[0]);
                                    if(ok.length>=2){
+                                       mapone.put("panduan",1);
                                        mapone.put("return_admin",ok[1]);
                                    }
 
@@ -101,33 +98,35 @@ public class indexController {
       @RequestParam("password") String password,
       @RequestParam("rePassword") String rePassword,
       @RequestParam(value = "sex",defaultValue = "") String sex,
-      @RequestParam(value = "main",defaultValue = "") String mainname,
-      @RequestParam(value = "secondary",defaultValue = "") String secondaryname,
+//      @RequestParam(value = "main",defaultValue = "") String mainname,
+//      @RequestParam(value = "secondary",defaultValue = "") String secondaryname,
       Map<String, Object> map){
        Accoutuser accoutuser=new Accoutuser();
-       bookmain  bookmain=new bookmain();
+
       if(rePassword.equals(password)){
           accoutuser.setId(id);
           accoutuser.setSex(sex);
           if(idname==null || idname.equals("")){
               idname=id;
           }
-          if(!mainname.equals("") && !secondaryname.equals("")){
-              if(!mainname.equals(secondaryname)){
-                  accoutuser.setIdname(idname);
-                  accoutuser.setPass(password);
-                  bookmain.setId(idname);
-                  String major=mainname+","+secondaryname;
-                  bookmain.setMajor(major);
-//                  bookmainService.insert_major(bookmain);
-              }else {
-                  map.put("rewasswordWarn","不能选择两个相同的专业");
-                  return   "index_two";
-              }
-          }else {
-              map.put("rewasswordWarn","专业不能为空");
-              return   "index_two";
-          }
+          accoutuser.setIdname(idname);
+          accoutuser.setPass(password);
+//          if(!mainname.equals("") && !secondaryname.equals("")){
+//              if(!mainname.equals(secondaryname)){
+//                  accoutuser.setIdname(idname);
+//                  accoutuser.setPass(password);
+//                  bookmain.setId(idname);
+//                  String major=mainname+","+secondaryname;
+//                  bookmain.setMajor(major);
+////                  bookmainService.insert_major(bookmain);
+//              }else {
+//                  map.put("rewasswordWarn","不能选择两个相同的专业");
+//                  return   "index_two";
+//              }
+//          }else {
+//              map.put("rewasswordWarn","专业不能为空");
+//              return   "index_two";
+//          }
 
       }else
       {

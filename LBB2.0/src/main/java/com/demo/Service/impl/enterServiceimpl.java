@@ -8,8 +8,6 @@ import com.demo.comp.myhand;
 import com.demo.mapper.Accoutmapper;
 import com.demo.pojo.Accoutuser;
 import com.demo.pojo.acc_role;
-import com.demo.pojo.bookmain;
-import com.demo.pojo.role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +32,6 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
    @Autowired
     Accoutuser accoutuser;
 
-    @Autowired
-    bookmainimpl bookmainimpl;
 
     @Autowired
     acc_roleService acc_roleService;
@@ -52,17 +48,6 @@ public class enterServiceimpl extends ServiceImpl<Accoutmapper,Accoutuser> imple
 
                 accoutService.setServiceIdtime(idtime,id);  //写入登录时间
                 session.setAttribute("yanzhen",id);  //登录拦截器
-
-                bookmain bookmain=new bookmain();
-                bookmain=bookmainimpl.mybatis_getmajor(id);
-                if(bookmain!=null){
-                    if(bookmain.getShowTime()<=0){
-                        mapone.put("password","你已被强制下线!");
-                        return "登录失败";
-                    }
-                }else {
-
-                }
                 acc_role.setAccId(id);
           List<acc_role> acc_roles =acc_roleService.getbyname_hwx(acc_role);
             Iterator<acc_role>  iterator=acc_roles.iterator();

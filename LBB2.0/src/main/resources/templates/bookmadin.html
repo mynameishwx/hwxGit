@@ -50,6 +50,7 @@
 <!--查询-->
 <div class="title-line">
     <span class="tit"  style="font-size: 38px;">书籍查询</span>
+    <input type="text">
 </div>
 <div>
 
@@ -57,8 +58,35 @@
 <!-- 借阅-->
 <div class="title-line">
     <span class="tit"  style="font-size: 38px;">图书借阅</span>
-</div>
-<div>
+        <table width="943" height="274" border="0">
+            <tbody align="center" >
+            <tr>
+                <th scope="col">编号</th>
+                <th scope="col">书名</th>
+                <th scope="col">作者</th>
+                <th scope="col">书籍类别</th>
+                <th scope="col">详情</th>
+                <th scope="col">删除</th>
+            </tr>
+            <tr th:each="book,stat:${page.Records}">
+                <td th:text="${stat.count}">&nbsp;</td>
+                <td th:text="${book.bookname}"></td>
+                <td th:text="${book.bookcreate}">&nbsp;</td>
+                <td th:text="${book.bookclass}">&nbsp;</td>
+                <td>
+                    <a th:href="@{/bookmain/books(bookname=${book.bookname})}">详情</a>
+                </td>
+                <td>
+<!--                    <a th:href="@{/data/delete/{deleteOne}(deleteOne=${user.id},pn=${page.current })}">删除</a>-->
+                </td>
+            </tr>
+            <tbody>
+        <table>
+        当前在第  [[${page.current}]] 页， 总共  [[${page.pages}]] 页 ，一共 [[${page.total}]]  条记录 <br>
+            <a th:each="num:${#numbers.sequence(1,page.pages)}">
+                <a th:href="@{/bookmain/admin(pn=${num})}">[[${num}]]</a>
+            </a>
+            <div>
 
 </div>
 <!-- 上传 -->
@@ -69,6 +97,13 @@
         <form action="/bookmain/uploadbook" method="post" enctype="multipart/form-data">
             <a>上传文件：</a><input type="file" id="booktext" name="booktext" ><br>
             <a>书籍名称：</a>  <input type="text" id="bookname" name="bookname"> <br>
+            <a>书籍类型:</a><select id="class" name="class"><br>
+            <option value="0">请选择</option>
+            <option value="1">java</option>
+            <option value="2">c++</option>
+            <option value="4">玄幻</option>
+            <option value="5">其他</option>
+        </select><br>
     		<a>作者：</a><input type="text" id="bookcreatename" name="bookCreate"> <br>
 
     		<input type="submit" value="添加书籍" >
