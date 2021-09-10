@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.powerMapper">
+    <select id="getbyidmapper_hwx" resultType="string" resultMap="power">
+        select *  from power
+        <where>
+            <if test="powerId!=null and powerId!=''">powerId=#{powerId}</if>
+        </where>
+    </select>
+    <resultMap id="power" type="com.demo.pojo.power">
+        <result column="powerId"   property="powerId"/>
+        <result column="powerName" property="powerName" />
+        <result column="powerUrl"  property="powerUrl"/>
+    </resultMap>
+</mapper>

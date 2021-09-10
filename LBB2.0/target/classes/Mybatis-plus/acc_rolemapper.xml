@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.acc_roleMapper">
+    <resultMap id="acc_role" type="com.demo.pojo.acc_role">
+        <result column="acc_roleId" property="acc_roleId"/>
+        <result column="accId" property="accId"/>
+        <result column="roleId" property="roleId"/>
+    </resultMap>
+    <select id="getbyuserId_hwx" resultType="com.demo.pojo.acc_role" resultMap="acc_role">
+        select * from acc_role
+        <where>
+            <if test="accId!=null and accId!=''">accId=#{accId}</if>
+        </where>
+    </select>
+   <select id="insert_hwx" parameterType="com.demo.pojo.acc_role" resultType="integer">
+       insert into  acc_role(accId,roleId) values(#{accId},#{roleId})
+   </select>
+    <update id="updata_hwx" parameterType="com.demo.pojo.acc_role" >
+        update acc_role set
+        <if test="accId!=null">accId=#{accId}</if>
+        <if test="accId!=null and accId!='' and  roleId!=null and roleId!=''">,</if>
+        <if test="roleId!=null">roleId=#{roleId}</if>
+        where  acc_roleId=#{acc_roleId}
+    </update>
+</mapper>

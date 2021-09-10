@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/enterOne.css">
+    <link rel="stylesheet" href="css/enterTwo.css">
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+	 <link rel="stylesheet" href="css/salary.css">
+    <script type="text/javascript" src="https://www.jq22.com/js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.combo.select.js"></script>
+    <script type="text/javascript">
+        $(function() {// 初始化内容
+            $("#select").comboSelect();
+        }); 
+		//交单
+		function jiaodan(){
+			var wxid=document.getElementById("wxid").value;
+			var wxint=document.getElementById("wxint").value;
+			var wxtext=document.getElementById("wxtext").value;
+			if( wxint>=0 && wxint<=1000){
+				var xmlhttp=new XMLHttpRequest();
+			
+			//绑定事件
+			xmlhttp.onreadystatechange=function(){
+				
+			}
+			//收集数据
+			
+			var data="wxid="+wxid+"&wxint="+wxint+"&wxtext="+wxtext;
+			
+			//初始化数据
+			xmlhttp.open("get","wx/jiaodan?"+data,true);
+			
+			//发送请求
+			xmlhttp.send();
+			}else{
+				alert("请输入正确人数");
+			}
+			alert(wxtext);
+			//创建异步对象
+		}
+	</script>
+    <meta charset="UTF-8">
+    <title>交接单系统</title>
+</head>
+<body>
+<div class="title-line" >
+    <span class="tit"  style="font-size: 38px;">交单</span>
+</div>
+<div>
+  群名:<input type="text" name="wxid" id="wxid">
+  人数:<input type="text" name="wxiint" id="wxint"></br>
+  内容:<input type="text" name="wxtext" id="wxtext"  style="width:300px; height:200px;"></br>
+	<input type="submit" value="交单" onClick="jiaodan();">
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.acc_bookMapper">
+
+
+
+
+
+    <select id="insert_hwx"  resultType="integer" parameterType="com.demo.pojo.acc_book">
+        insert  into   acc_book(bookid,accid,createtime,time,state)
+        values(#{bookid},#{accid},#{createtime},#{time},#{state})
+    </select>
+
+
+    <update id="alter_hwx" parameterType="com.demo.pojo.acc_book">
+            update acc_book set
+           <if test="state!=null and state!=''">state=#{state}</if>
+            where  id=#{id}
+    </update>
+</mapper>

@@ -98,8 +98,6 @@ public class indexController {
       @RequestParam("password") String password,
       @RequestParam("rePassword") String rePassword,
       @RequestParam(value = "sex",defaultValue = "") String sex,
-//      @RequestParam(value = "main",defaultValue = "") String mainname,
-//      @RequestParam(value = "secondary",defaultValue = "") String secondaryname,
       Map<String, Object> map){
        Accoutuser accoutuser=new Accoutuser();
 
@@ -111,23 +109,6 @@ public class indexController {
           }
           accoutuser.setIdname(idname);
           accoutuser.setPass(password);
-//          if(!mainname.equals("") && !secondaryname.equals("")){
-//              if(!mainname.equals(secondaryname)){
-//                  accoutuser.setIdname(idname);
-//                  accoutuser.setPass(password);
-//                  bookmain.setId(idname);
-//                  String major=mainname+","+secondaryname;
-//                  bookmain.setMajor(major);
-////                  bookmainService.insert_major(bookmain);
-//              }else {
-//                  map.put("rewasswordWarn","不能选择两个相同的专业");
-//                  return   "index_two";
-//              }
-//          }else {
-//              map.put("rewasswordWarn","专业不能为空");
-//              return   "index_two";
-//          }
-
       }else
       {
           map.put("rewasswordWarn","密码不一致");
